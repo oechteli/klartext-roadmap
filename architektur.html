@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architektur – Klartext Liebe Intern</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script src="_nav.js"></script>
+
+<main class="page-main">
+  <div class="page-hero">
+    <h1>🏗️ Technische Architektur</h1>
+    <p>Wie funktioniert Klartext Liebe? – Von der Codezeile bis zum Kunden-Browser erklärt.</p>
+  </div>
+
+  <!-- Deploy-Flow -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-head"><span>🔄</span><h2>Wie geht eine Änderung live? (Deploy-Prozess)</h2></div>
+    <div class="card-body">
+      <div class="flow-box">
+        <div class="flow-row">
+          <span class="flow-step done">1. Code ändern</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step done">2. git push auf „main"</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step done">3. Cloudflare baut (2 Min.)</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step done">4. Automatisch live ✅</span>
+        </div>
+        <div class="flow-label" style="margin-top:8px">Der Code liegt auf GitHub (oechteli/klartextliebe). Cloudflare überwacht das Repo und baut bei jedem Push automatisch neu – kein manuelles Hochladen nötig.</div>
+      </div>
+
+      <div class="flow-box">
+        <div class="flow-row">
+          <span class="flow-step done">Besucher öffnet URL</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step done">Cloudflare liefert HTML</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step plan">Login (Phase 5)</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step plan">Supabase prüft</span>
+          <span class="flow-arr">→</span>
+          <span class="flow-step plan">Dashboard (Phase 5)</span>
+        </div>
+        <div class="flow-label" style="margin-top:8px"><span style="background:#D1FAE5;padding:2px 8px;border-radius:4px;font-size:.78rem">Grün</span> = bereits live &nbsp; <span style="background:#EDE9FE;padding:2px 8px;border-radius:4px;font-size:.78rem">Lila</span> = noch geplant</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zwei Cloudflare-Seiten -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-head"><span>☁️</span><h2>Die zwei Cloudflare-Projekte</h2></div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="border:2px solid var(--teal);border-radius:12px;padding:16px">
+          <div style="font-size:1.3rem;margin-bottom:6px">🔒</div>
+          <div style="font-weight:800;margin-bottom:4px">Interne Verwaltung</div>
+          <div style="font-size:.8rem;color:var(--ink2);margin-bottom:10px">Geschützt mit Cloudflare Access (nur für Monika)</div>
+          <div style="font-family:monospace;font-size:.8rem;color:var(--violet)">klartext-roadmap.pages.dev</div>
+          <div style="margin-top:8px;font-size:.78rem;color:var(--ink3)">GitHub: oechteli/klartext-roadmap<br>Lokaler Pfad: C:\Users\mail\klartext-roadmap</div>
+        </div>
+        <div style="border:2px solid var(--violet);border-radius:12px;padding:16px">
+          <div style="font-size:1.3rem;margin-bottom:6px">🌐</div>
+          <div style="font-weight:800;margin-bottom:4px">Kunden-Website & Portal</div>
+          <div style="font-size:.8rem;color:var(--ink2);margin-bottom:10px">Öffentlich – für Interessenten und Kunden</div>
+          <div style="font-family:monospace;font-size:.8rem;color:var(--violet)">klartextliebe.monika-oechtering.workers.dev</div>
+          <div style="margin-top:8px;font-size:.78rem;color:var(--ink3)">GitHub: oechteli/klartextliebe<br>Lokaler Pfad: C:\Users\mail\klartext-liebe</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech-Bausteine -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-head"><span>🧩</span><h2>Die Technologie-Bausteine</h2></div>
+    <div class="card-body">
+      <div class="arch-grid">
+        <div class="arch-card">
+          <div class="arch-card-ico">⚛️</div>
+          <div class="arch-card-name">Next.js 14</div>
+          <div class="arch-card-desc">Grundgerüst der Website. Baut alle Seiten, verwaltet welche URL welche Seite zeigt, optimiert Ladezeiten. Verwendet den modernen „App Router".</div>
+          <div class="arch-card-st as-live">✅ Live</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">🎨</div>
+          <div class="arch-card-name">Tailwind CSS</div>
+          <div class="arch-card-desc">Design-System. Alle Farben, Abstände, Schriftgrößen in einer Konfigurationsdatei definiert – konsequentes Branding, kein Chaos.</div>
+          <div class="arch-card-st as-live">✅ Live</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">☁️</div>
+          <div class="arch-card-name">Cloudflare Workers</div>
+          <div class="arch-card-desc">Hosting. Fertige Website wird weltweit schnell ausgeliefert. Auto-Deploy bei GitHub-Push. Kostenlos bis zu sehr hohen Zugriffszahlen.</div>
+          <div class="arch-card-st as-live">✅ Live</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">🐙</div>
+          <div class="arch-card-name">GitHub</div>
+          <div class="arch-card-desc">Versionskontrolle. Jede Code-Änderung wird gespeichert. Man kann jederzeit eine ältere Version wiederherstellen. Löst auch das Auto-Deploy aus.</div>
+          <div class="arch-card-st as-live">✅ Live</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">🔑</div>
+          <div class="arch-card-name">Cloudflare Access</div>
+          <div class="arch-card-desc">Schützt die interne Roadmap-Seite mit E-Mail-Login (Zero Trust). Nur autorisierte E-Mail-Adressen kommen rein – ohne eigenes Backend.</div>
+          <div class="arch-card-st as-plan">📋 Einrichten (s. unten)</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">🗄️</div>
+          <div class="arch-card-name">Supabase</div>
+          <div class="arch-card-desc">Datenbank + Login. Nutzerdaten, Kontaktanfragen, Waitlist-Einträge. „Backend aus der Steckdose" – braucht keinen eigenen Server.</div>
+          <div class="arch-card-st as-plan">📋 Phase 4</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">💳</div>
+          <div class="arch-card-name">Stripe</div>
+          <div class="arch-card-desc">Zahlungsabwicklung. Kunden bezahlen Coaching-Pakete sicher. Monika sieht alle Transaktionen im Stripe-Dashboard. DSGVO-konform.</div>
+          <div class="arch-card-st as-plan">📋 Phase 3</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-ico">🤖</div>
+          <div class="arch-card-name">Claude AI (Anthropic)</div>
+          <div class="arch-card-desc">KI für Persönlichkeitsanalyse. Wertet Fragebogen tiefgehend aus. Aktuell noch ein Mock – wird in Phase 7 echt angebunden.</div>
+          <div class="arch-card-st as-later">⏳ Phase 7</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Datei-Struktur -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-head"><span>📂</span><h2>Datei-Struktur der Kunden-Website</h2></div>
+    <div class="card-body">
+      <div class="code-block" style="color:#E8E8E8;font-size:.82rem">
+<span style="color:#7C6BC4;font-weight:700">C:\Users\mail\klartext-liebe\</span>
+├── <span style="color:#3B82C4">app/</span>                        <span class="c">← Alle Seiten</span>
+│   ├── <span style="color:#3FB9C7">page.tsx</span>               <span class="c">← Startseite</span>
+│   ├── <span style="color:#3FB9C7">coaching/</span>              <span class="c">← Coaching-Angebote</span>
+│   ├── <span style="color:#3FB9C7">ueber-mich/</span>            <span class="c">← Über Monika (Foto fehlt noch!)</span>
+│   ├── <span style="color:#F0945A">impressum/</span>             <span class="c">← ⚠️ Noch ausfüllen!</span>
+│   ├── <span style="color:#F0945A">datenschutz/</span>           <span class="c">← ⚠️ Noch ausfüllen!</span>
+│   └── <span style="color:#3FB9C7">…weitere Seiten</span>
+├── <span style="color:#3B82C4">components/</span>                 <span class="c">← Wiederverwendbare Bausteine</span>
+│   ├── <span style="color:#8E8AA8">forms/</span>                 <span class="c">← Formulare (aktuell: Mock)</span>
+│   └── <span style="color:#8E8AA8">sections/</span>              <span class="c">← Startseiten-Bereiche</span>
+├── <span style="color:#3B82C4">lib/</span>                        <span class="c">← Daten & Logik</span>
+│   ├── <span style="color:#F0945A">stripe-links.ts</span>        <span class="c">← ⏳ Stripe-URLs eintragen</span>
+│   └── <span style="color:#F0945A">analyze-profile.ts</span>     <span class="c">← ⏳ Mock → KI Phase 7</span>
+├── <span style="color:#3B82C4">public/brand/</span>               <span class="c">← Bilder (logo.jpg, header.jpg)</span>
+└── <span style="color:#3B82C4">tailwind.config.ts</span>          <span class="c">← Markenfarben</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cloudflare Access einrichten -->
+  <div class="card">
+    <div class="card-head"><span>🔑</span><h2>Cloudflare Access einrichten (interne Seite schützen)</h2></div>
+    <div class="card-body">
+      <p style="font-size:.87rem;color:var(--ink2);margin-bottom:14px">
+        Um <strong>klartext-roadmap.pages.dev</strong> mit einem E-Mail-Login zu schützen (wie das Familien-Dashboard), einmalig im Cloudflare-Dashboard einrichten:
+      </p>
+      <ol style="font-size:.85rem;color:var(--ink2);line-height:2.2;padding-left:20px">
+        <li>Cloudflare Dashboard öffnen → <a href="https://one.dash.cloudflare.com" target="_blank" style="color:var(--blue)">one.dash.cloudflare.com</a> (Zero Trust)</li>
+        <li>Links: <strong>Access → Applications → Add an application</strong></li>
+        <li>Typ wählen: <strong>Self-hosted</strong></li>
+        <li>App-Name: <code>Klartext Roadmap</code> · Domain: <code>klartext-roadmap.pages.dev</code></li>
+        <li>Policy hinzufügen: <strong>Allow → Emails → monika.oechtering@googlemail.com</strong></li>
+        <li>Speichern → fertig! Beim nächsten Aufruf erscheint ein Login-Bildschirm.</li>
+      </ol>
+      <div style="background:var(--done-bg);border:1px solid var(--done-bdr);border-radius:9px;padding:12px 14px;margin-top:12px;font-size:.82rem;color:#065F46">
+        ✅ Kostenlos im Cloudflare Free Plan enthalten · kein eigenes Backend nötig · Login per E-Mail-OTP (kein Passwort)
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

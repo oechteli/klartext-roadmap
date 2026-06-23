@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap – Klartext Liebe Intern</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script src="_nav.js"></script>
+
+<main class="page-main">
+  <div class="page-hero">
+    <h1>🗺️ Roadmap</h1>
+    <p>9 Phasen von der leeren Seite bis zur vollständigen Plattform · Phase anklicken zum Aufklappen</p>
+  </div>
+
+  <!-- Phase 0 -->
+  <div class="phase open" id="p0">
+    <div class="phase-head" onclick="toggle('p0')">
+      <div class="phase-icon" style="background:#D1FAE5">✅</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 0 · Juni 2026</div>
+        <div class="phase-title">Fundament & Live-Deploy</div>
+        <div class="phase-desc">Next.js-Projekt, alle Seiten, SEO, Branding, Sicherheit, GitHub, Cloudflare</div>
+      </div>
+      <span class="pill pill-done">✅ Abgeschlossen</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Das Fundament steht: Webseite live, sicher, SEO-optimiert, bei jedem Git-Push automatisch aktualisiert.</div>
+      <ul class="tasks">
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">Next.js 14 + TypeScript + Tailwind CSS</div><div class="task-detail">App Router, statischer Export, Markenfarben konfiguriert</div></div><span class="task-tag tag-dev">Tech</span></li>
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">Alle 9 Seiten angelegt</div><div class="task-detail">Start, Über mich, Coaching, Community, Analyse, Marktplatz, Events, YouTube, Kontakt + 404</div></div><span class="task-tag tag-dev">Tech</span></li>
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">SEO komplett</div><div class="task-detail">Meta-Tags, Canonical URLs, Sitemap.xml, Robots.txt, OpenGraph-Bilder, JSON-LD</div></div><span class="task-tag tag-dev">SEO</span></li>
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">Branding & Favicon</div><div class="task-detail">Herz-Logo im Gradient, Web-App-Manifest, Theme-Color</div></div><span class="task-tag tag-dev">Design</span></li>
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">Accessibility & Security-Header</div><div class="task-detail">Skip-Link, HSTS, X-Frame-Options, CSP, Referrer-Policy</div></div><span class="task-tag tag-dev">A11y</span></li>
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">GitHub + Cloudflare Auto-Deploy</div><div class="task-detail">oechteli/klartextliebe → main → automatisch live auf workers.dev</div></div><span class="task-tag tag-dev">Deploy</span></li>
+        <li class="task done"><div class="task-chk">✓</div><div class="task-content"><div class="task-name">Interne Roadmap-Seite</div><div class="task-detail">klartext-roadmap.pages.dev mit Übergabeprotokoll (cross-PC via KV)</div></div><span class="task-tag tag-dev">Intern</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase open" id="p1">
+    <div class="phase-head" onclick="toggle('p1')">
+      <div class="phase-icon" style="background:#FEE2E2">⚠️</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 1 · JETZT DRINGEND</div>
+        <div class="phase-title">Rechtliches & Vertrauen</div>
+        <div class="phase-desc">Impressum und Datenschutz müssen vor echter Nutzerdaten-Erhebung vollständig sein</div>
+      </div>
+      <span class="pill pill-urgent">⚠️ Dringend</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why" style="border-color:var(--orange);background:var(--warn-bg)"><strong>Warum zuerst?</strong> Sobald echte E-Mail-Adressen gesammelt werden (Waitlist, Kontaktformular), ist ein vollständiges Impressum und eine DSGVO-konforme Datenschutzerklärung Pflicht. Verstöße können Abmahnungen kosten.</div>
+      <ul class="tasks">
+        <li class="task urgent"><div class="task-chk"></div><div class="task-content"><div class="task-name">Impressum ausfüllen</div><div class="task-detail">Name, Adresse, E-Mail, ggf. Steuer-Nr. – Datei: <code>app/impressum/page.tsx</code></div></div><span class="task-tag tag-legal">Rechtlich</span></li>
+        <li class="task urgent"><div class="task-chk"></div><div class="task-content"><div class="task-name">Datenschutzerklärung ausfüllen</div><div class="task-detail">Welche Daten? Supabase, Stripe, Cloudflare erwähnen – Datei: <code>app/datenschutz/page.tsx</code></div></div><span class="task-tag tag-legal">Rechtlich</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase" id="p2">
+    <div class="phase-head" onclick="toggle('p2')">
+      <div class="phase-icon" style="background:#FCE7F3">📸</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 2 · Parallel möglich</div>
+        <div class="phase-title">Inhalte & Medien vervollständigen</div>
+        <div class="phase-desc">Eigenes Gesicht zeigen, Video einbetten, eigene Domain</div>
+      </div>
+      <span class="pill pill-active">🔜 Als nächstes</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Vertrauen entsteht durch ein echtes Gesicht. Eine eigene Domain (klartext-liebe.de) wirkt professioneller als workers.dev.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Profil-Foto hochladen</div><div class="task-detail">Foto unter <code>public/brand/</code> ablegen, in <code>app/ueber-mich/page.tsx</code> einbinden</div></div><span class="task-tag tag-content">Inhalt</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">YouTube-Video einbetten</div><div class="task-detail">Erstes @klartextliebe-Video in <code>app/youtube/page.tsx</code> einbinden</div></div><span class="task-tag tag-content">Inhalt</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Domain klartext-liebe.de registrieren & verbinden</div><div class="task-detail">Bei Cloudflare kaufen → DNS → <code>NEXT_PUBLIC_SITE_URL</code> als Build-Variable setzen</div></div><span class="task-tag tag-dev">Domain</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase" id="p3">
+    <div class="phase-head" onclick="toggle('p3')">
+      <div class="phase-icon" style="background:#D1FAE5">💳</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 3</div>
+        <div class="phase-title">Erste Einnahmen – Stripe</div>
+        <div class="phase-desc">Coaching-Pakete wirklich kaufbar machen – ohne eigenes Backend</div>
+      </div>
+      <span class="pill pill-open">📋 Geplant</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Stripe Payment Links funktionieren ohne eigenen Server. Monika erstellt in Stripe einen Link, der wird eingetragen – Buttons sofort kaufbar. Stripe übernimmt Zahlung, Quittung, Steuern.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Stripe-Konto eröffnen & verifizieren</div><div class="task-detail">stripe.com → Konto für Monika Oechtering, Bankverbindung hinterlegen</div></div><span class="task-tag tag-stripe">Stripe</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Payment Links für Coaching-Pakete anlegen</div><div class="task-detail">z.B. „Erstgespräch 60 min", „3-Monats-Begleitung" – je ein Stripe Payment Link</div></div><span class="task-tag tag-stripe">Stripe</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Links in lib/stripe-links.ts eintragen</div><div class="task-detail">Platzhalter ersetzen → Buttons zeigen echten Kauflink</div></div><span class="task-tag tag-stripe">Stripe</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">„Bald buchbar"-Hinweis entfernen</div><div class="task-detail">In Coaching-Komponenten Platzhalter-Buttons durch echte Kauf-Buttons ersetzen</div></div><span class="task-tag tag-stripe">Stripe</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase" id="p4">
+    <div class="phase-head" onclick="toggle('p4')">
+      <div class="phase-icon" style="background:#DBEAFE">🗄️</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-title">Datenbank anschließen – Supabase</div>
+        <div class="phase-desc">Waitlist und Kontaktformular speichern echte Daten</div>
+      </div>
+      <span class="pill pill-open">📋 Geplant</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Supabase ist eine fertige Datenbank aus der Steckdose. Formulare simulieren aktuell nur das Absenden – mit Supabase landen Anfragen wirklich in einer Datenbank, die Monika einsehen kann.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Supabase-Projekt erstellen</div><div class="task-detail">supabase.com → neues Projekt, Region EU-West (DSGVO)</div></div><span class="task-tag tag-supa">Supabase</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Umgebungsvariablen setzen</div><div class="task-detail"><code>.env.local</code>: NEXT_PUBLIC_SUPABASE_URL und NEXT_PUBLIC_SUPABASE_ANON_KEY</div></div><span class="task-tag tag-supa">Supabase</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Datenbankschema einrichten</div><div class="task-detail">Migration <code>supabase/migrations/0001_init.sql</code> ausführen</div></div><span class="task-tag tag-supa">Supabase</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Waitlist- & Kontaktformular aktivieren</div><div class="task-detail">Mock-Insert durch echten Supabase-Insert ersetzen</div></div><span class="task-tag tag-supa">Supabase</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Build-Variablen in Cloudflare setzen</div><div class="task-detail">Workers → Einstellungen → Umgebungsvariablen</div></div><span class="task-tag tag-dev">Deploy</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase" id="p5">
+    <div class="phase-head" onclick="toggle('p5')">
+      <div class="phase-icon" style="background:#EDE9FE">🔐</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 5</div>
+        <div class="phase-title">Login & Kunden-Dashboard</div>
+        <div class="phase-desc">Kunden können sich einloggen und ihre gebuchten Pakete sehen</div>
+      </div>
+      <span class="pill pill-open">📋 Geplant</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Nach dem Kauf eines Pakets bekommen Kunden Zugang zum persönlichen Bereich: Buchungen, Unterlagen, Analyse-Ergebnisse und Community-Zugang – alles an einem Ort.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Supabase Auth einrichten</div><div class="task-detail">E-Mail/Passwort-Login, Magic Link, E-Mail-Bestätigung</div></div><span class="task-tag tag-supa">Supabase</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Login / Registrierung</div><div class="task-detail">Neue Seite <code>app/login/page.tsx</code></div></div><span class="task-tag tag-dev">Frontend</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Kunden-Dashboard</div><div class="task-detail"><code>app/dashboard/page.tsx</code>: gebuchte Pakete, Fortschritt, Downloads, Analyse</div></div><span class="task-tag tag-dev">Frontend</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Stripe Webhook → Supabase</div><div class="task-detail">Nach Zahlung automatisch Zugang freischalten</div></div><span class="task-tag tag-stripe">Stripe</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 6 -->
+  <div class="phase" id="p6">
+    <div class="phase-head" onclick="toggle('p6')">
+      <div class="phase-icon" style="background:#FEF3C7">👥</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 6</div>
+        <div class="phase-title">Community-Bereich</div>
+        <div class="phase-desc">Geschlossener Raum für Mitglieder: Austausch, Unterstützung, Verbindung</div>
+      </div>
+      <span class="pill pill-later">⏳ Später</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Die Community ist das Herzstück – Singles, die gemeinsam wachsen, moderiert von Monika. Nur für zahlende Mitglieder.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Geschützten Bereich mit Auth-Guard</div><div class="task-detail">Nur eingeloggte & bezahlte Nutzer sehen die Community</div></div><span class="task-tag tag-dev">Frontend</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Beiträge & Kommentare</div><div class="task-detail">Einfaches Forum in Supabase</div></div><span class="task-tag tag-dev">Feature</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Moderations-Tools für Monika</div><div class="task-detail">Admin-Ansicht: Beiträge genehmigen, Nutzer verwalten</div></div><span class="task-tag tag-dev">Feature</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 7 -->
+  <div class="phase" id="p7">
+    <div class="phase-head" onclick="toggle('p7')">
+      <div class="phase-icon" style="background:#FEF3C7">🤖</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 7</div>
+        <div class="phase-title">KI-Persönlichkeitsanalyse (echt)</div>
+        <div class="phase-desc">Claude AI wertet den Fragebogen aus – echte Tiefe statt Mock</div>
+      </div>
+      <span class="pill pill-later">⏳ Später</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Aktuell gibt <code>lib/analyze-profile.ts</code> regelbasierte Ergebnisse. Mit Claude API werden Antworten tiefgehend interpretiert und ein persönliches Profil erstellt.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Anthropic API-Key einrichten</div><div class="task-detail">API-Key als Umgebungsvariable in Cloudflare + .env.local</div></div><span class="task-tag tag-ai">KI</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Cloudflare Worker als KI-Endpunkt</div><div class="task-detail">Worker empfängt Fragebogen, ruft Claude API auf, gibt Analyse zurück</div></div><span class="task-tag tag-ai">KI</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Analyse-Ergebnisse in Supabase speichern</div><div class="task-detail">Im Dashboard sichtbar, für Matching nutzbar</div></div><span class="task-tag tag-ai">KI</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 8 -->
+  <div class="phase" id="p8">
+    <div class="phase-head" onclick="toggle('p8')">
+      <div class="phase-icon" style="background:#FCE7F3">💑</div>
+      <div class="phase-meta">
+        <div class="phase-num">Phase 8</div>
+        <div class="phase-title">Matching & Marktplatz</div>
+        <div class="phase-desc">Kuratierte Partnervorschläge – das eigentliche Herzstück</div>
+      </div>
+      <span class="pill pill-later">⏳ Später</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Kein Algorithmus, sondern Monika kuratiert persönlich, wer zu wem passt. Die Plattform unterstützt dabei mit Profilen und Werkzeugen.</div>
+      <ul class="tasks">
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Profil-Erstellung für Mitglieder</div><div class="task-detail">Fotos, Werte, Wünsche, Persönlichkeitsanalyse-Ergebnis</div></div><span class="task-tag tag-dev">Feature</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Admin-Freigabe-Workflow</div><div class="task-detail">Monika prüft jedes Profil vor Sichtbarkeit</div></div><span class="task-tag tag-dev">Feature</span></li>
+        <li class="task open"><div class="task-chk"></div><div class="task-content"><div class="task-name">Kuratierte Vorschläge</div><div class="task-detail">Monika wählt Matches aus und schickt Vorschläge per Dashboard-Nachricht</div></div><span class="task-tag tag-dev">Feature</span></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<script>
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+// Direkt-Sprung per #anchor
+window.addEventListener('load', () => {
+  const hash = location.hash.replace('#','');
+  if (hash) {
+    const el = document.getElementById(hash);
+    if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'start'}), 100); }
+  }
+});
+</script>
+</body>
+</html>

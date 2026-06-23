@@ -3,1149 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Klartext Liebe – Interne Roadmap</title>
-  <style>
-    :root {
-      --teal:   #3FB9C7;
-      --blue:   #3B82C4;
-      --violet: #7C6BC4;
-      --pink:   #E06A9E;
-      --orange: #F0945A;
-      --cream:  #FAF7F2;
-      --ink:    #1E1B2E;
-      --ink2:   #4A4560;
-      --ink3:   #8E8AA8;
-      --white:  #FFFFFF;
-      --border: #E8E4F0;
-      --done-bg:   #EDF9FA;
-      --done-bdr:  #3FB9C7;
-      --open-bg:   #F8F7FF;
-      --open-bdr:  #D4CEF0;
-      --warn-bg:   #FFF8F0;
-      --warn-bdr:  #F0945A;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      line-height: 1.6;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: linear-gradient(135deg, var(--teal), var(--blue), var(--violet));
-      color: white;
-      padding: 0;
-    }
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 24px 20px;
-    }
-    .header-top {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 8px;
-    }
-    .header-logo {
-      width: 44px; height: 44px;
-      background: rgba(255,255,255,.2);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-    }
-    .header-title { font-size: 1.5rem; font-weight: 700; }
-    .header-sub { font-size: .85rem; opacity: .85; margin-bottom: 20px; }
-    .badge-intern {
-      display: inline-block;
-      background: rgba(255,255,255,.25);
-      border: 1px solid rgba(255,255,255,.4);
-      border-radius: 20px;
-      padding: 3px 12px;
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-    }
-
-    /* ── NAV ── */
-    nav {
-      background: rgba(0,0,0,.15);
-      border-top: 1px solid rgba(255,255,255,.15);
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      gap: 0;
-    }
-    .nav-btn {
-      background: none;
-      border: none;
-      color: rgba(255,255,255,.75);
-      padding: 12px 20px;
-      font-size: .9rem;
-      font-weight: 500;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all .2s;
-    }
-    .nav-btn:hover { color: white; }
-    .nav-btn.active {
-      color: white;
-      border-bottom-color: white;
-    }
-
-    /* ── MAIN ── */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 32px 24px 64px;
-    }
-
-    /* ── TABS ── */
-    .tab { display: none; }
-    .tab.active { display: block; }
-
-    /* ── PROGRESS OVERVIEW ── */
-    .progress-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-      margin-bottom: 36px;
-    }
-    .progress-card {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-    .progress-num {
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .progress-label { font-size: .8rem; color: var(--ink3); }
-    .c-teal   { color: var(--teal); }
-    .c-orange { color: var(--orange); }
-    .c-blue   { color: var(--blue); }
-    .c-violet { color: var(--violet); }
-
-    /* ── PHASE CARDS ── */
-    .phase {
-      background: white;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      margin-bottom: 24px;
-      overflow: hidden;
-    }
-    .phase-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 20px 24px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .phase-header:hover { background: var(--cream); }
-    .phase-icon {
-      width: 46px; height: 46px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-    .phase-meta { flex: 1; }
-    .phase-num {
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      color: var(--ink3);
-      text-transform: uppercase;
-    }
-    .phase-title { font-size: 1.1rem; font-weight: 700; margin: 2px 0; }
-    .phase-desc { font-size: .85rem; color: var(--ink2); }
-    .phase-status {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 6px;
-    }
-    .status-pill {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: .75rem;
-      font-weight: 600;
-    }
-    .pill-done   { background: #D1FAE5; color: #065F46; }
-    .pill-active { background: #FEF3C7; color: #92400E; }
-    .pill-open   { background: #EDE9FE; color: #4C1D95; }
-    .pill-later  { background: #F3F4F6; color: #4B5563; }
-    .pill-urgent { background: #FEE2E2; color: #991B1B; }
-    .phase-chevron {
-      font-size: 1rem;
-      color: var(--ink3);
-      transition: transform .2s;
-    }
-    .phase.open .phase-chevron { transform: rotate(90deg); }
-
-    .phase-body {
-      display: none;
-      border-top: 1px solid var(--border);
-      padding: 20px 24px 24px;
-    }
-    .phase.open .phase-body { display: block; }
-
-    .phase-why {
-      background: var(--open-bg);
-      border-left: 3px solid var(--violet);
-      border-radius: 0 8px 8px 0;
-      padding: 12px 16px;
-      font-size: .85rem;
-      color: var(--ink2);
-      margin-bottom: 16px;
-    }
-
-    /* ── TASK LIST ── */
-    .task-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .task-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid;
-    }
-    .task-item.done {
-      background: var(--done-bg);
-      border-color: var(--done-bdr);
-    }
-    .task-item.open {
-      background: var(--open-bg);
-      border-color: var(--open-bdr);
-    }
-    .task-item.urgent {
-      background: var(--warn-bg);
-      border-color: var(--warn-bdr);
-    }
-    .task-check {
-      width: 20px; height: 20px;
-      border-radius: 5px;
-      flex-shrink: 0;
-      margin-top: 1px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .task-item.done .task-check   { background: var(--teal); color: white; }
-    .task-item.open .task-check   { background: white; border: 2px solid var(--open-bdr); }
-    .task-item.urgent .task-check { background: white; border: 2px solid var(--orange); }
-    .task-content { flex: 1; }
-    .task-name { font-size: .9rem; font-weight: 600; }
-    .task-item.done .task-name { color: var(--ink2); }
-    .task-detail { font-size: .8rem; color: var(--ink3); margin-top: 2px; }
-    .task-tag {
-      font-size: .7rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 600;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .tag-legal  { background: #FEE2E2; color: #991B1B; }
-    .tag-stripe { background: #D1FAE5; color: #065F46; }
-    .tag-supa   { background: #DBEAFE; color: #1E40AF; }
-    .tag-dev    { background: #EDE9FE; color: #4C1D95; }
-    .tag-ai     { background: #FEF3C7; color: #92400E; }
-    .tag-content{ background: #FCE7F3; color: #831843; }
-
-    /* ── ARCHITEKTUR-TAB ── */
-    .arch-section { margin-bottom: 32px; }
-    .arch-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--violet);
-      border-bottom: 2px solid var(--violet);
-      padding-bottom: 6px;
-      margin-bottom: 16px;
-    }
-    .arch-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-    .arch-card {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      padding: 16px;
-    }
-    .arch-card-icon { font-size: 1.6rem; margin-bottom: 8px; }
-    .arch-card-name { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
-    .arch-card-desc { font-size: .78rem; color: var(--ink2); }
-    .arch-card-status {
-      margin-top: 8px;
-      font-size: .72rem;
-      font-weight: 600;
-    }
-    .as-live  { color: #065F46; }
-    .as-plan  { color: #1E40AF; }
-    .as-later { color: #6B7280; }
-
-    .flow-box {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 16px;
-    }
-    .flow-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-    .flow-step {
-      background: linear-gradient(135deg, var(--teal), var(--blue));
-      color: white;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: .82rem;
-      font-weight: 600;
-    }
-    .flow-step.done { background: #D1FAE5; color: #065F46; }
-    .flow-step.plan { background: #EDE9FE; color: #4C1D95; }
-    .flow-arrow { color: var(--ink3); font-size: 1.1rem; }
-    .flow-label { font-size: .8rem; color: var(--ink2); margin-top: 4px; }
-
-    /* ── LINKS ── */
-    .links-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .link-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-size: .85rem;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--blue);
-    }
-    .link-pill:hover { border-color: var(--blue); }
-
-    /* ── ÜBERGABE ── */
-    .uebergabe-banner {
-      background: linear-gradient(135deg, #1E1B2E, #2D2850);
-      color: white;
-      border-radius: 14px;
-      padding: 20px 24px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .uebergabe-banner-icon { font-size: 2rem; }
-    .uebergabe-banner h2 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
-    .uebergabe-banner p { font-size: .82rem; opacity: .75; }
-    .uebergabe-ts {
-      margin-left: auto;
-      text-align: right;
-      font-size: .78rem;
-      opacity: .7;
-      flex-shrink: 0;
-    }
-    .uebergabe-ts strong { display: block; font-size: .9rem; opacity: 1; }
-
-    .ue-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-    .ue-card-head {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
-      background: var(--cream);
-    }
-    .ue-card-head h3 { font-size: .9rem; font-weight: 700; flex:1; }
-    .ue-card-body { padding: 16px 18px; }
-
-    .ue-editable {
-      width: 100%;
-      min-height: 90px;
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      font-family: inherit;
-      font-size: .88rem;
-      line-height: 1.6;
-      color: var(--ink);
-      background: #FAFAFA;
-      resize: vertical;
-      outline: none;
-      transition: border-color .2s, background .2s;
-    }
-    .ue-editable:focus { border-color: var(--violet); border-style: solid; background: white; }
-
-    .ue-save-btn {
-      margin-top: 10px;
-      background: linear-gradient(135deg, var(--teal), var(--blue));
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 20px;
-      font-size: .85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-    .ue-save-btn:hover { opacity: .9; }
-    .ue-saved-hint {
-      display: inline-block;
-      margin-left: 10px;
-      font-size: .8rem;
-      color: var(--teal);
-      opacity: 0;
-      transition: opacity .4s;
-    }
-
-    .log-entry {
-      border-left: 3px solid var(--violet);
-      padding: 10px 14px;
-      margin-bottom: 12px;
-      background: var(--open-bg);
-      border-radius: 0 8px 8px 0;
-    }
-    .log-entry-date {
-      font-size: .75rem;
-      font-weight: 700;
-      color: var(--violet);
-      margin-bottom: 4px;
-    }
-    .log-entry-text { font-size: .85rem; color: var(--ink2); white-space: pre-wrap; }
-
-    .push-anleitung {
-      background: var(--ink);
-      color: #A8FF78;
-      border-radius: 10px;
-      padding: 14px 18px;
-      font-family: monospace;
-      font-size: .8rem;
-      line-height: 1.8;
-    }
-    .push-anleitung .comment { color: #888; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .nav-btn { padding: 10px 12px; font-size: .8rem; }
-      .phase-status { display: none; }
-    }
-  </style>
+  <title>Dashboard – Klartext Liebe Intern</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+<script src="_nav.js"></script>
 
-<header>
-  <div class="header-inner">
-    <div class="header-top">
-      <div class="header-logo">💜</div>
-      <div>
-        <div class="header-title">Klartext Liebe – Interne Roadmap</div>
-        <span class="badge-intern">🔒 Nur intern – nicht für Kunden</span>
-      </div>
-    </div>
-    <div class="header-sub">Stand: Juni 2026 · Monika Oechtering · klartextliebe.monika-oechtering.workers.dev</div>
+<main class="page-main">
+  <div class="page-hero">
+    <h1>Dashboard</h1>
+    <p>Schnellübersicht · Stand: 23. Juni 2026</p>
   </div>
-  <nav>
-    <div class="nav-inner">
-      <button class="nav-btn active" onclick="showTab('roadmap', this)">🗺️ Roadmap</button>
-      <button class="nav-btn" onclick="showTab('architektur', this)">🏗️ Architektur</button>
-      <button class="nav-btn" onclick="showTab('links', this)">🔗 Links & Zugänge</button>
-      <button class="nav-btn" onclick="showTab('uebergabe', this)">📋 Übergabe</button>
-    </div>
-  </nav>
-</header>
 
-<main>
+  <!-- Statistiken -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num" style="color:#3FB9C7">1</div><div class="stat-label">Phase abgeschlossen</div></div>
+    <div class="stat"><div class="stat-num" style="color:#F0945A">2</div><div class="stat-label">Phasen aktiv</div></div>
+    <div class="stat"><div class="stat-num" style="color:#7C6BC4">6</div><div class="stat-label">Phasen geplant</div></div>
+    <div class="stat"><div class="stat-num" style="color:#3B82C4">15</div><div class="stat-label">Aufgaben erledigt</div></div>
+    <div class="stat"><div class="stat-num" style="color:#8E8AA8">24</div><div class="stat-label">Aufgaben offen</div></div>
+  </div>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- TAB: ROADMAP                                          -->
-  <!-- ══════════════════════════════════════════════════════ -->
-  <div id="tab-roadmap" class="tab active">
-
-    <!-- Fortschritts-Übersicht -->
-    <div class="progress-grid" style="margin-top:8px;">
-      <div class="progress-card">
-        <div class="progress-num c-teal">1</div>
-        <div class="progress-label">Phase abgeschlossen</div>
-      </div>
-      <div class="progress-card">
-        <div class="progress-num c-orange">2</div>
-        <div class="progress-label">Phasen laufen gerade</div>
-      </div>
-      <div class="progress-card">
-        <div class="progress-num c-violet">6</div>
-        <div class="progress-label">Phasen geplant</div>
-      </div>
-      <div class="progress-card">
-        <div class="progress-num c-blue">15</div>
-        <div class="progress-label">Aufgaben erledigt</div>
-      </div>
-      <div class="progress-card">
-        <div class="progress-num" style="color:var(--ink3)">24</div>
-        <div class="progress-label">Aufgaben offen</div>
-      </div>
-    </div>
-
-    <!-- PHASE 0 -->
-    <div class="phase open" id="p0">
-      <div class="phase-header" onclick="togglePhase('p0')">
-        <div class="phase-icon" style="background:#D1FAE5">✅</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 0</div>
-          <div class="phase-title">Fundament &amp; Live-Deploy</div>
-          <div class="phase-desc">Next.js-Projekt, alle Seiten, SEO, Branding, Sicherheit, GitHub, Cloudflare</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-done">✅ Abgeschlossen</span>
-          <span style="font-size:.75rem;color:var(--ink3)">Juni 2026</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Das Fundament steht: Die Webseite ist live, sicher, SEO-optimiert und bei jedem Git-Push automatisch aktualisiert.
-        </div>
-        <ul class="task-list">
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">Next.js 14 Projekt mit TypeScript &amp; Tailwind CSS</div><div class="task-detail">App Router, statischer Export, Markenfarben konfiguriert</div></div><span class="task-tag tag-dev">Tech</span></li>
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">Alle 9 Seiten angelegt</div><div class="task-detail">Start, Über mich, Coaching, Community, Analyse, Marktplatz, Events, YouTube, Kontakt + 404</div></div><span class="task-tag tag-dev">Tech</span></li>
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">SEO komplett</div><div class="task-detail">Meta-Tags, Canonical URLs, Sitemap.xml, Robots.txt, OpenGraph-Bilder, JSON-LD (Organisation, FAQ)</div></div><span class="task-tag tag-dev">SEO</span></li>
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">Branding &amp; Favicon</div><div class="task-detail">Herz-Logo im Gradient, Web-App-Manifest, Theme-Color</div></div><span class="task-tag tag-dev">Design</span></li>
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">Accessibility</div><div class="task-detail">Skip-Link, main-Landmark, semantisches HTML</div></div><span class="task-tag tag-dev">A11y</span></li>
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">Security-Header</div><div class="task-detail">HSTS, X-Frame-Options, CSP, Referrer-Policy, Permissions-Policy</div></div><span class="task-tag tag-dev">Security</span></li>
-          <li class="task-item done"><div class="task-check">✓</div><div class="task-content"><div class="task-name">GitHub Repo + Cloudflare Auto-Deploy</div><div class="task-detail">oechteli/klartextliebe → main → automatisch live auf workers.dev</div></div><span class="task-tag tag-dev">Deploy</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 1 -->
-    <div class="phase open" id="p1">
-      <div class="phase-header" onclick="togglePhase('p1')">
-        <div class="phase-icon" style="background:#FEE2E2">⚠️</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 1 – JETZT</div>
-          <div class="phase-title">Rechtliches &amp; Vertrauen</div>
-          <div class="phase-desc">Impressum und Datenschutz müssen vor echter Nutzerdaten-Erfassung vollständig sein</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-urgent">⚠️ Dringend!</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why" style="border-color:var(--orange);background:var(--warn-bg)">
-          <strong>Warum zuerst?</strong> Sobald echte E-Mail-Adressen gesammelt werden (Waitlist, Kontaktformular), ist ein vollständiges Impressum und eine DSGVO-konforme Datenschutzerklärung <em>Pflicht</em>. Verstöße können Abmahnungen kosten.
-        </div>
-        <ul class="task-list">
-          <li class="task-item urgent"><div class="task-check"></div><div class="task-content"><div class="task-name">Impressum ausfüllen</div><div class="task-detail">Name, Adresse, E-Mail, ggf. Steuer-Nr. / USt-ID – in app/impressum/page.tsx eintragen</div></div><span class="task-tag tag-legal">Rechtlich</span></li>
-          <li class="task-item urgent"><div class="task-check"></div><div class="task-content"><div class="task-name">Datenschutzerklärung ausfüllen</div><div class="task-detail">Welche Daten werden wann gespeichert? Supabase, Stripe, Cloudflare erwähnen – in app/datenschutz/page.tsx</div></div><span class="task-tag tag-legal">Rechtlich</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 2 -->
-    <div class="phase" id="p2">
-      <div class="phase-header" onclick="togglePhase('p2')">
-        <div class="phase-icon" style="background:#FCE7F3">📸</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 2 – Jetzt parallel möglich</div>
-          <div class="phase-title">Inhalte &amp; Medien vervollständigen</div>
-          <div class="phase-desc">Eigenes Gesicht zeigen, Video einbetten, eigene Domain einrichten</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-active">🔜 Als nächstes</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Vertrauen entsteht durch ein echtes Gesicht und persönliche Stimme. YouTube-Videos zeigen die Persönlichkeit. Eine eigene Domain (klartext-liebe.de) wirkt professioneller als workers.dev.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Profil-Foto hochladen</div><div class="task-detail">Foto unter public/brand/ ablegen, in app/ueber-mich/page.tsx einbinden</div></div><span class="task-tag tag-content">Inhalt</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">YouTube-Video einbetten</div><div class="task-detail">Erstes @klartextliebe-Video in app/youtube/page.tsx einbinden (Intro-Video / Teaser)</div></div><span class="task-tag tag-content">Inhalt</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Domain klartext-liebe.de kaufen &amp; verbinden</div><div class="task-detail">Bei Cloudflare oder einem Registrar kaufen → DNS-Eintrag auf Cloudflare Workers → NEXT_PUBLIC_SITE_URL als Build-Variable setzen</div></div><span class="task-tag tag-dev">Domain</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 3 -->
-    <div class="phase" id="p3">
-      <div class="phase-header" onclick="togglePhase('p3')">
-        <div class="phase-icon" style="background:#D1FAE5">💳</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 3</div>
-          <div class="phase-title">Erste Einnahmen – Stripe-Zahlung</div>
-          <div class="phase-desc">Coaching-Pakete wirklich kaufbar machen – ohne eigenes Backend</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-open">📋 Geplant</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Stripe Payment Links funktionieren ohne eigenen Server: Monika erstellt in Stripe einen Link, der wird in den Code eingetragen – Buttons werden sofort kaufbar. Stripe übernimmt Zahlung, Quittung, Steuern.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Stripe-Konto eröffnen &amp; verifizieren</div><div class="task-detail">stripe.com → Konto für Monika Oechtering, Bankverbindung hinterlegen</div></div><span class="task-tag tag-stripe">Stripe</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Payment Links für Coaching-Pakete anlegen</div><div class="task-detail">Z. B. „Erstgespräch 60 min", „3-Monats-Begleitung", etc. – je ein Stripe Payment Link</div></div><span class="task-tag tag-stripe">Stripe</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Links in lib/stripe-links.ts eintragen</div><div class="task-detail">Platzhalter ersetzen → Buttons auf der Website zeigen echten Kauflink</div></div><span class="task-tag tag-stripe">Stripe</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">„Bald buchbar"-Hinweis entfernen</div><div class="task-detail">In den Coaching-Komponenten die Platzhalter-Buttons durch echte Kauf-Buttons ersetzen</div></div><span class="task-tag tag-stripe">Stripe</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 4 -->
-    <div class="phase" id="p4">
-      <div class="phase-header" onclick="togglePhase('p4')">
-        <div class="phase-icon" style="background:#DBEAFE">🗄️</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 4</div>
-          <div class="phase-title">Datenbank anschließen – Supabase</div>
-          <div class="phase-desc">Waitlist und Kontaktformular speichern echte Daten statt nur zu simulieren</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-open">📋 Geplant</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Supabase ist eine fertige Datenbank-Plattform (wie ein „Backend aus der Steckdose"). Die Formulare simulieren aktuell nur das Absenden – mit Supabase landen Anfragen wirklich in einer Datenbank, die Monika einsehen kann.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Supabase-Projekt erstellen</div><div class="task-detail">supabase.com → neues Projekt anlegen, Region EU-West wählen (DSGVO)</div></div><span class="task-tag tag-supa">Supabase</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Umgebungsvariablen setzen</div><div class="task-detail">.env.local anlegen: NEXT_PUBLIC_SUPABASE_URL und NEXT_PUBLIC_SUPABASE_ANON_KEY eintragen</div></div><span class="task-tag tag-supa">Supabase</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Datenbankschema einrichten</div><div class="task-detail">Migration supabase/migrations/0001_init.sql ausführen → Tabellen waitlist, contacts, profiles werden angelegt</div></div><span class="task-tag tag-supa">Supabase</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Waitlist-Formular aktivieren</div><div class="task-detail">In components/forms/WaitlistForm.tsx: Mock-Insert durch echten Supabase-Insert ersetzen</div></div><span class="task-tag tag-supa">Supabase</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Kontaktformular aktivieren</div><div class="task-detail">In components/forms/ContactForm.tsx: Mock durch echten Supabase-Insert ersetzen</div></div><span class="task-tag tag-supa">Supabase</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Build-Variable in Cloudflare setzen</div><div class="task-detail">In Cloudflare Workers → Einstellungen → Umgebungsvariablen die Supabase-Keys eintragen</div></div><span class="task-tag tag-dev">Deploy</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 5 -->
-    <div class="phase" id="p5">
-      <div class="phase-header" onclick="togglePhase('p5')">
-        <div class="phase-icon" style="background:#EDE9FE">🔐</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 5</div>
-          <div class="phase-title">Login &amp; Kunden-Dashboard</div>
-          <div class="phase-desc">Kundinnen und Kunden können sich einloggen und ihre gebuchten Pakete sehen</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-open">📋 Geplant</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Nach dem Kauf eines Coaching-Pakets bekommen Kunden Zugang zu einem persönlichen Bereich: Ihre Buchungen, Unterlagen, Analyse-Ergebnisse und Community-Zugang – alles an einem Ort.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Supabase Auth einrichten</div><div class="task-detail">E-Mail/Passwort-Login aktivieren, Magic Link als Option, E-Mail-Bestätigung konfigurieren</div></div><span class="task-tag tag-supa">Supabase</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Login / Registrierung Seite</div><div class="task-detail">Neue Seite app/login/page.tsx mit E-Mail + Passwort-Formular</div></div><span class="task-tag tag-dev">Frontend</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Kunden-Dashboard</div><div class="task-detail">app/dashboard/page.tsx: Übersicht der gebuchten Pakete, Fortschritt, Downloads, Analyse-Ergebnis</div></div><span class="task-tag tag-dev">Frontend</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Profil-Seite</div><div class="task-detail">Name, Foto, Interessen bearbeiten – Basis für Matching-Algorithmus</div></div><span class="task-tag tag-dev">Frontend</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Stripe Webhook → Supabase</div><div class="task-detail">Nach Zahlung automatisch Zugang freischalten (Cloudflare Worker als Webhook-Empfänger)</div></div><span class="task-tag tag-stripe">Stripe</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 6 -->
-    <div class="phase" id="p6">
-      <div class="phase-header" onclick="togglePhase('p6')">
-        <div class="phase-icon" style="background:#FEF3C7">👥</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 6</div>
-          <div class="phase-title">Community-Bereich</div>
-          <div class="phase-desc">Geschlossener Raum für Mitglieder: Austausch, Unterstützung, Verbindung</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-later">⏳ Später</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Die Community ist das Herzstück von Klartext Liebe: Singles, die gemeinsam wachsen wollen, moderiert von Monika. Nur für zahlende Mitglieder zugänglich.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Geschützten Bereich mit Auth-Guard einrichten</div><div class="task-detail">Nur eingeloggte &amp; bezahlte Nutzer sehen die Community-Seite</div></div><span class="task-tag tag-dev">Frontend</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Beiträge schreiben &amp; lesen</div><div class="task-detail">Einfaches Forum: Themen, Beiträge, Kommentare – gespeichert in Supabase</div></div><span class="task-tag tag-dev">Feature</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Moderations-Tools für Monika</div><div class="task-detail">Admin-Ansicht: Beiträge genehmigen, löschen, Nutzer sperren</div></div><span class="task-tag tag-dev">Feature</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 7 -->
-    <div class="phase" id="p7">
-      <div class="phase-header" onclick="togglePhase('p7')">
-        <div class="phase-icon" style="background:#FEF3C7">🤖</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 7</div>
-          <div class="phase-title">KI-Persönlichkeitsanalyse (echt)</div>
-          <div class="phase-desc">Claude AI wertet den Fragebogen aus – echte Tiefe statt Mock-Ergebnis</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-later">⏳ Später</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Aktuell gibt lib/analyze-profile.ts regelbasierte Ergebnisse aus. Mit Claude API werden die Antworten wirklich tiefgehend interpretiert und dem Nutzer ein persönliches, nuanciertes Profil zurückgegeben.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Anthropic API-Key einrichten</div><div class="task-detail">API-Key als Umgebungsvariable in Cloudflare + .env.local</div></div><span class="task-tag tag-ai">KI</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Cloudflare Worker als KI-Endpunkt</div><div class="task-detail">Serverloser Worker empfängt Fragebogen-Antworten, ruft Claude API auf, gibt Analyse zurück</div></div><span class="task-tag tag-ai">KI</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Analyse-Ergebnisse speichern</div><div class="task-detail">Profil in Supabase speichern → im Dashboard sichtbar, für Matching nutzbar</div></div><span class="task-tag tag-ai">KI</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PHASE 8 -->
-    <div class="phase" id="p8">
-      <div class="phase-header" onclick="togglePhase('p8')">
-        <div class="phase-icon" style="background:#FCE7F3">💑</div>
-        <div class="phase-meta">
-          <div class="phase-num">Phase 8</div>
-          <div class="phase-title">Matching &amp; Marktplatz</div>
-          <div class="phase-desc">Kuratierte Partnervorschläge – das eigentliche Herzstück der Plattform</div>
-        </div>
-        <div class="phase-status">
-          <span class="status-pill pill-later">⏳ Später</span>
-        </div>
-        <span class="phase-chevron">▶</span>
-      </div>
-      <div class="phase-body">
-        <div class="phase-why">
-          Matching ist das Alleinstellungsmerkmal von Klartext Liebe – kein Algorithmus, sondern Monika kuratiert persönlich, wer zu wem passt. Die Plattform unterstützt dabei mit Profilen und Werkzeugen.
-        </div>
-        <ul class="task-list">
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Profil-Erstellung für Mitglieder</div><div class="task-detail">Ausführliches Profil: Fotos, Werte, Wünsche, Persönlichkeitsanalyse-Ergebnis</div></div><span class="task-tag tag-dev">Feature</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Admin-Freigabe-Workflow</div><div class="task-detail">Monika prüft jedes Profil bevor es sichtbar wird → Qualitätssicherung</div></div><span class="task-tag tag-dev">Feature</span></li>
-          <li class="task-item open"><div class="task-check"></div><div class="task-content"><div class="task-name">Kuratierte Vorschläge verschicken</div><div class="task-detail">Monika wählt Matches manuell aus und schickt Vorschläge per E-Mail / Dashboard-Nachricht</div></div><span class="task-tag tag-dev">Feature</span></li>
-        </ul>
-      </div>
-    </div>
-
-  </div><!-- /tab-roadmap -->
-
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- TAB: ARCHITEKTUR                                      -->
-  <!-- ══════════════════════════════════════════════════════ -->
-  <div id="tab-architektur" class="tab">
-
-    <div class="arch-section">
-      <div class="arch-title">🔄 Wie funktioniert die Website? (Schritt für Schritt)</div>
-      <div class="flow-box">
-        <div class="flow-label" style="margin-bottom:12px;font-weight:600;">Deploy-Prozess (wie Änderungen live gehen)</div>
-        <div class="flow-row">
-          <span class="flow-step done">1. Monika / Claude ändert Code</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step done">2. Git Push auf „main"</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step done">3. Cloudflare baut die Seite</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step done">4. In ~2 Minuten live</span>
-        </div>
-        <div class="flow-label">Der Code liegt auf GitHub (oechteli/klartextliebe). Cloudflare schaut ständig ob sich etwas ändert und baut dann automatisch neu.</div>
-      </div>
-
-      <div class="flow-box">
-        <div class="flow-label" style="margin-bottom:12px;font-weight:600;">Nutzer-Reise (Was passiert wenn jemand die Seite besucht)</div>
-        <div class="flow-row">
-          <span class="flow-step done">Browser öffnet Website</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step done">Cloudflare liefert HTML aus</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step plan">Login (Phase 5)</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step plan">Supabase prüft Zugang</span>
-          <span class="flow-arrow">→</span>
-          <span class="flow-step plan">Dashboard zeigt Pakete</span>
-        </div>
-        <div class="flow-label">Grau = noch nicht gebaut. Weiß/Grün = bereits live.</div>
-      </div>
-    </div>
-
-    <div class="arch-section">
-      <div class="arch-title">🧩 Die Bausteine (Technologie-Übersicht)</div>
-      <div class="arch-grid">
-        <div class="arch-card">
-          <div class="arch-card-icon">⚛️</div>
-          <div class="arch-card-name">Next.js 14</div>
-          <div class="arch-card-desc">Das Grundgerüst der Website. Baut alle Seiten, verwaltet das Routing (welche URL → welche Seite), optimiert Bilder und Ladezeiten.</div>
-          <div class="arch-card-status as-live">✅ Live</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">🎨</div>
-          <div class="arch-card-name">Tailwind CSS</div>
-          <div class="arch-card-desc">Das Design-System. Alle Farben, Abstände, Schriftgrößen – alles in einer Konfigurationsdatei definiert. Konsequentes Branding.</div>
-          <div class="arch-card-status as-live">✅ Live</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">☁️</div>
-          <div class="arch-card-name">Cloudflare Workers</div>
-          <div class="arch-card-desc">Hosting. Die fertige Website wird hier gespeichert und weltweit superschnell ausgeliefert. Auto-Deploy bei jedem GitHub-Push.</div>
-          <div class="arch-card-status as-live">✅ Live</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">🐙</div>
-          <div class="arch-card-name">GitHub</div>
-          <div class="arch-card-desc">Versionskontrolle. Jede Änderung am Code wird hier gespeichert. Man kann jederzeit zu einer älteren Version zurück.</div>
-          <div class="arch-card-status as-live">✅ Live</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">🗄️</div>
-          <div class="arch-card-name">Supabase</div>
-          <div class="arch-card-desc">Datenbank + Login. Hier werden Nutzerdaten, Kontaktanfragen, Waitlist-Einträge und Coaching-Profile gespeichert.</div>
-          <div class="arch-card-status as-plan">📋 Phase 4</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">💳</div>
-          <div class="arch-card-name">Stripe</div>
-          <div class="arch-card-desc">Zahlungsabwicklung. Kunden bezahlen Coaching-Pakete sicher über Stripe. Monika sieht alle Transaktionen im Stripe-Dashboard.</div>
-          <div class="arch-card-status as-plan">📋 Phase 3</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">🤖</div>
-          <div class="arch-card-name">Claude AI (Anthropic)</div>
-          <div class="arch-card-desc">KI für Persönlichkeitsanalyse. Wertet Fragebogen-Antworten tiefgehend aus und erstellt ein persönliches Profil.</div>
-          <div class="arch-card-status as-later">⏳ Phase 7</div>
-        </div>
-        <div class="arch-card">
-          <div class="arch-card-icon">🌐</div>
-          <div class="arch-card-name">Eigene Domain</div>
-          <div class="arch-card-desc">klartext-liebe.de statt der langen workers.dev-Adresse. Professioneller, merkbarer, vertrauenswürdiger.</div>
-          <div class="arch-card-status as-plan">📋 Phase 2</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="arch-section">
-      <div class="arch-title">📂 Datei-Struktur (wo was liegt)</div>
-      <div class="flow-box" style="font-family:monospace;font-size:.82rem;line-height:1.9;color:var(--ink2)">
-        <span style="color:var(--violet);font-weight:700">klartext-liebe/</span><br>
-        &nbsp;&nbsp;<span style="color:var(--blue)">app/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Alle Seiten der Website<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">page.tsx</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Startseite<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">coaching/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Coaching-Seite<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">ueber-mich/</span> &nbsp;&nbsp;&nbsp;&nbsp;← Über-mich-Seite (Foto fehlt noch)<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">impressum/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← ⚠️ Noch ausfüllen!<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal)">datenschutz/</span> &nbsp;&nbsp;&nbsp;← ⚠️ Noch ausfüllen!<br>
-        &nbsp;&nbsp;<span style="color:var(--blue)">components/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Wiederverwendbare Bausteine<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink3)">forms/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Formulare (aktuell: Mock)<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink3)">sections/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Startseiten-Bereiche (Hero, Offer…)<br>
-        &nbsp;&nbsp;<span style="color:var(--blue)">lib/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Daten &amp; Logik<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--orange)">stripe-links.ts</span> &nbsp;← ⏳ Stripe-URLs eintragen<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--orange)">analyze-profile.ts</span>← ⏳ Noch Mock → KI Phase 7<br>
-        &nbsp;&nbsp;<span style="color:var(--blue)">public/brand/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Bilder (logo.jpg, header.jpg)<br>
-        &nbsp;&nbsp;<span style="color:var(--blue)">tailwind.config.ts</span> &nbsp;&nbsp;&nbsp;← Markenfarben
-      </div>
-    </div>
-
-  </div><!-- /tab-architektur -->
-
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- TAB: LINKS                                            -->
-  <!-- ══════════════════════════════════════════════════════ -->
-  <div id="tab-links" class="tab">
-
-    <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-      <h2 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--violet)">🌐 Live-URLs</h2>
-      <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:10px 0;color:var(--ink2);width:35%">Kunden-Website</td>
-          <td style="padding:10px 0;"><a href="https://klartextliebe.monika-oechtering.workers.dev" target="_blank" style="color:var(--blue)">klartextliebe.monika-oechtering.workers.dev</a></td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:10px 0;color:var(--ink2)">Diese Roadmap</td>
-          <td style="padding:10px 0;"><a href="https://klartext-roadmap.pages.dev" target="_blank" style="color:var(--blue)">klartext-roadmap.pages.dev</a></td>
-        </tr>
-        <tr>
-          <td style="padding:10px 0;color:var(--ink2)">Geplante Domain</td>
-          <td style="padding:10px 0;color:var(--ink3)">klartext-liebe.de (noch nicht registriert)</td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-      <h2 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--violet)">🔧 Admin &amp; Code</h2>
-      <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:10px 0;color:var(--ink2);width:35%">GitHub Repo</td>
-          <td style="padding:10px 0;"><a href="https://github.com/oechteli/klartextliebe" target="_blank" style="color:var(--blue)">github.com/oechteli/klartextliebe</a></td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:10px 0;color:var(--ink2)">Cloudflare Dashboard</td>
-          <td style="padding:10px 0;"><a href="https://dash.cloudflare.com" target="_blank" style="color:var(--blue)">dash.cloudflare.com</a></td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:10px 0;color:var(--ink2)">Lokaler Pfad (Windows)</td>
-          <td style="padding:10px 0;font-family:monospace;color:var(--ink2)">C:\Users\mail\klartext-liebe</td>
-        </tr>
-        <tr>
-          <td style="padding:10px 0;color:var(--ink2)">Branch für Deployment</td>
-          <td style="padding:10px 0;font-family:monospace;color:var(--teal)">main</td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-      <h2 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--violet)">⚠️ Wichtige Hinweise</h2>
-      <ul style="font-size:.875rem;color:var(--ink2);line-height:2;padding-left:20px;">
-        <li><strong>Nie npm 11 für package-lock.json nutzen</strong> → Cloudflare CI nutzt npm 10. Immer <code>npx npm@10.9.2 install --package-lock-only</code></li>
-        <li><strong>Vor jedem Push:</strong> <code>npm run build</code> lokal testen (Ordner <code>out/</code> wird erzeugt)</li>
-        <li><strong>Bilder:</strong> next/image braucht <code>images.unoptimized: true</code> im statischen Export</li>
-        <li><strong>Windows curl:</strong> schlägt fehl – stattdessen PowerShell <code>Invoke-WebRequest</code> nutzen</li>
-        <li><strong>EBUSY-Fehler beim Build:</strong> einfach nochmal bauen (Antivirus blockiert kurz)</li>
-      </ul>
-    </div>
-
-    <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:24px;">
-      <h2 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--violet)">🚀 Lokale Entwicklung – Schnellstart</h2>
-      <pre style="background:var(--ink);color:#A8FF78;padding:16px;border-radius:10px;font-size:.82rem;line-height:1.8;overflow-x:auto">
-cd C:\Users\mail\klartext-liebe
-npm install          # einmalig
-npm run dev          # startet auf http://localhost:3000
-npm run build        # baut statische Seite nach out/
-git add -A &amp;&amp; git commit -m "..." &amp;&amp; git push   # → automatisch live!</pre>
-    </div>
-
-  </div><!-- /tab-links -->
-
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- TAB: ÜBERGABEPROTOKOLL                               -->
-  <!-- ══════════════════════════════════════════════════════ -->
-  <div id="tab-uebergabe" class="tab">
-
-    <!-- Banner -->
-    <div class="uebergabe-banner">
-      <div class="uebergabe-banner-icon">📋</div>
-      <div>
-        <h2>Übergabeprotokoll</h2>
-        <p>Füll diese Seite aus, bevor du den PC verlässt – so kann jeder sofort weitermachen.</p>
-      </div>
-      <div class="uebergabe-ts">
-        <strong id="ue-last-saved">Noch nicht gespeichert</strong>
-        Zuletzt aktualisiert
-      </div>
-    </div>
-
-    <!-- Aktueller Stand -->
-    <div class="ue-card">
-      <div class="ue-card-head">
-        <span>🎯</span>
-        <h3>Wo stehen wir gerade?</h3>
-        <span style="font-size:.75rem;color:var(--ink3)">Aktuelle Phase &amp; offener Punkt</span>
-      </div>
-      <div class="ue-card-body">
-        <textarea class="ue-editable" id="ue-stand" placeholder="Beispiel: Phase 1 läuft – Impressum ist offen. Roadmap-Seite ist live auf klartext-roadmap.pages.dev."></textarea>
-        <div style="margin-top:10px;font-size:.8rem;color:var(--ink3)">💡 Tipp: Schreib in 1–2 Sätzen, was der aktuelle Fokus ist.</div>
-      </div>
-    </div>
-
-    <!-- Zuletzt gemacht -->
-    <div class="ue-card">
-      <div class="ue-card-head">
-        <span>✅</span>
-        <h3>Was wurde in dieser Sitzung gemacht?</h3>
-      </div>
-      <div class="ue-card-body">
-        <textarea class="ue-editable" id="ue-gemacht" placeholder="Beispiel:&#10;– Roadmap-Seite auf klartext-roadmap.pages.dev deployed&#10;– Kunden-Dashboard Mockup angelegt&#10;– GitHub-Repo oechteli/klartext-roadmap erstellt"></textarea>
-      </div>
-    </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
 
     <!-- Nächste Schritte -->
-    <div class="ue-card">
-      <div class="ue-card-head">
-        <span>▶️</span>
-        <h3>Nächste konkrete Schritte</h3>
-        <span style="font-size:.75rem;color:var(--ink3)">So konkret, dass jemand anderes sofort loslegen kann</span>
-      </div>
-      <div class="ue-card-body">
-        <textarea class="ue-editable" id="ue-naechste" style="min-height:110px" placeholder="Beispiel:&#10;1. app/impressum/page.tsx öffnen → echten Text einfügen (Name, Adresse, E-Mail)&#10;2. app/datenschutz/page.tsx → Vorlage von eRecht24 einfügen&#10;3. npm run build lokal testen&#10;4. git push → live"></textarea>
-      </div>
-    </div>
-
-    <!-- Offene Fragen -->
-    <div class="ue-card">
-      <div class="ue-card-head">
-        <span>❓</span>
-        <h3>Offene Fragen / Blocker</h3>
-      </div>
-      <div class="ue-card-body">
-        <textarea class="ue-editable" id="ue-blocker" placeholder="Beispiel:&#10;– Welche Adresse soll ins Impressum? (Monika entscheidet)&#10;– Stripe-Konto noch nicht eröffnet"></textarea>
-        <div style="margin-top:10px">
-          <button class="ue-save-btn" onclick="saveUebergabe()">💾 Jetzt speichern</button>
-          <span class="ue-saved-hint" id="ue-hint">✓ Gespeichert</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Session-Log -->
-    <div class="ue-card">
-      <div class="ue-card-head">
-        <span>📜</span>
-        <h3>Session-Verlauf</h3>
-        <span style="font-size:.75rem;color:var(--ink3)">Automatisch befüllt beim Speichern</span>
-        <button onclick="clearLog()" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:6px;padding:3px 10px;font-size:.72rem;color:var(--ink3);cursor:pointer">Log löschen</button>
-      </div>
-      <div class="ue-card-body" id="ue-log">
-        <!-- Einträge werden hier per JS eingefügt -->
-        <div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:16px 0">
-          Noch keine Sessions gespeichert. Fülle die Felder oben aus und klick „Speichern".
-        </div>
-      </div>
-    </div>
-
-    <!-- Push-Anleitung -->
-    <div class="ue-card">
-      <div class="ue-card-head">
-        <span>🖥️</span>
-        <h3>Auf anderem PC weitermachen</h3>
-      </div>
-      <div class="ue-card-body">
-        <p style="font-size:.85rem;color:var(--ink2);margin-bottom:14px">
-          Die Felder oben werden im Browser (localStorage) gespeichert – nur auf <em>diesem</em> PC. Damit du von <strong>jedem PC</strong> aus den aktuellen Stand siehst, die Roadmap-Seite selbst aktualisieren und auf GitHub pushen:
-        </p>
-        <div class="push-anleitung">
-          <span class="comment"># 1. Roadmap-Ordner öffnen</span><br>
-          cd C:\Users\mail\klartext-roadmap<br><br>
-          <span class="comment"># 2. index.html bearbeiten (Übergabe-Inhalt direkt im &lt;script&gt; unten aktualisieren)</span><br>
-          <span class="comment"># → Alternativ: Claude bitten, den Stand einzutragen</span><br><br>
-          <span class="comment"># 3. Committen &amp; pushen → Cloudflare deployed automatisch</span><br>
-          git add index.html<br>
-          git commit -m "Übergabe: [Datum] – [was wurde gemacht]"<br>
-          git push
-        </div>
-        <p style="font-size:.8rem;color:var(--ink3);margin-top:12px">
-          📌 GitHub-Repo: <a href="https://github.com/oechteli/klartext-roadmap" target="_blank" style="color:var(--blue)">github.com/oechteli/klartext-roadmap</a> &nbsp;|&nbsp;
-          Live-URL: <a href="https://klartext-roadmap.pages.dev" target="_blank" style="color:var(--blue)">klartext-roadmap.pages.dev</a>
-        </p>
-
-        <div style="margin-top:20px;background:var(--done-bg);border:1px solid var(--done-bdr);border-radius:10px;padding:14px 16px;">
-          <div style="font-weight:700;font-size:.88rem;margin-bottom:8px;color:#065F46">💡 Claude als Übergabe-Helfer</div>
-          <div style="font-size:.82rem;color:var(--ink2);line-height:1.7">
-            Du kannst Claude Code einfach sagen:<br>
-            <em>„Bitte trage in die Roadmap-Seite ein, was wir heute gemacht haben, und push das auf GitHub."</em><br>
-            Claude aktualisiert dann automatisch den Stand und committed die Seite.
+    <div>
+      <div class="card">
+        <div class="card-head"><span>▶️</span><h2>Nächste konkrete Schritte</h2></div>
+        <div class="card-body">
+          <div class="next-steps">
+            <a class="next-step" href="roadmap.html#p1">
+              <div class="next-step-num">1</div>
+              <div class="next-step-body">
+                <div class="next-step-name">⚠️ Impressum & Datenschutz ausfüllen</div>
+                <div class="next-step-detail">Rechtlich dringend – vor echter Datenerhebung nötig</div>
+              </div>
+              <span style="color:var(--ink3)">→</span>
+            </a>
+            <a class="next-step" href="roadmap.html#p2">
+              <div class="next-step-num">2</div>
+              <div class="next-step-body">
+                <div class="next-step-name">📸 Profil-Foto & YouTube-Video einbetten</div>
+                <div class="next-step-detail">app/ueber-mich + app/youtube anpassen</div>
+              </div>
+              <span style="color:var(--ink3)">→</span>
+            </a>
+            <a class="next-step" href="roadmap.html#p2">
+              <div class="next-step-num">3</div>
+              <div class="next-step-body">
+                <div class="next-step-name">🌐 Domain klartext-liebe.de registrieren</div>
+                <div class="next-step-detail">Bei Cloudflare kaufen → DNS → Build-Variable setzen</div>
+              </div>
+              <span style="color:var(--ink3)">→</span>
+            </a>
+            <a class="next-step" href="roadmap.html#p3">
+              <div class="next-step-num">4</div>
+              <div class="next-step-body">
+                <div class="next-step-name">💳 Stripe-Konto eröffnen</div>
+                <div class="next-step-detail">Payment Links anlegen → Buttons aktivieren</div>
+              </div>
+              <span style="color:var(--ink3)">→</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-  </div><!-- /tab-uebergabe -->
+    <!-- Letztes Übergabeprotokoll -->
+    <div>
+      <div class="card">
+        <div class="card-head">
+          <span>📋</span><h2>Letztes Übergabeprotokoll</h2>
+          <a href="uebergabe.html" style="font-size:.78rem;color:var(--blue);text-decoration:none;margin-left:auto">Alle →</a>
+        </div>
+        <div class="card-body" id="dash-uebergabe">
+          <div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:20px 0">
+            <div style="font-size:1.5rem;margin-bottom:8px">📋</div>
+            Wird geladen…
+          </div>
+        </div>
+      </div>
 
+      <!-- Live-URLs -->
+      <div class="card">
+        <div class="card-head"><span>🌐</span><h2>Live-URLs</h2></div>
+        <div class="card-body">
+          <table class="info-table">
+            <tr><td>Kunden-Website</td><td><a href="https://klartextliebe.monika-oechtering.workers.dev" target="_blank">klartextliebe.monika-oechtering.workers.dev</a></td></tr>
+            <tr><td>Kunden-Portal (neu)</td><td><a href="https://klartextliebe-portal.pages.dev" target="_blank">klartextliebe-portal.pages.dev</a></td></tr>
+            <tr><td>Diese Seite</td><td><a href="https://klartext-roadmap.pages.dev" target="_blank">klartext-roadmap.pages.dev</a></td></tr>
+            <tr><td>GitHub (Kunden)</td><td><a href="https://github.com/oechteli/klartextliebe" target="_blank">oechteli/klartextliebe</a></td></tr>
+            <tr><td>GitHub (Roadmap)</td><td><a href="https://github.com/oechteli/klartext-roadmap" target="_blank">oechteli/klartext-roadmap</a></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </main>
 
 <script>
-  function showTab(name, btn) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-    btn.classList.add('active');
-    if (name === 'uebergabe') loadUebergabe();
-  }
-  function togglePhase(id) {
-    document.getElementById(id).classList.toggle('open');
-  }
-
-  /* ── ÜBERGABE: localStorage-Logik ── */
-  const UE_KEY = 'kl_uebergabe';
-  const LOG_KEY = 'kl_ue_log';
-
-  function loadUebergabe() {
-    const data = JSON.parse(localStorage.getItem(UE_KEY) || '{}');
-    if (data.stand)    document.getElementById('ue-stand').value    = data.stand;
-    if (data.gemacht)  document.getElementById('ue-gemacht').value  = data.gemacht;
-    if (data.naechste) document.getElementById('ue-naechste').value = data.naechste;
-    if (data.blocker)  document.getElementById('ue-blocker').value  = data.blocker;
-    if (data.ts) {
-      document.getElementById('ue-last-saved').textContent = data.ts;
-    }
-    renderLog();
-  }
-
-  function saveUebergabe() {
-    const now = new Date();
-    const ts = now.toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'})
-             + ' ' + now.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'}) + ' Uhr';
-
-    const data = {
-      stand:    document.getElementById('ue-stand').value,
-      gemacht:  document.getElementById('ue-gemacht').value,
-      naechste: document.getElementById('ue-naechste').value,
-      blocker:  document.getElementById('ue-blocker').value,
-      ts
-    };
-    localStorage.setItem(UE_KEY, JSON.stringify(data));
-    document.getElementById('ue-last-saved').textContent = ts;
-
-    // Log-Eintrag hinzufügen
-    const log = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-    log.unshift({ ts, gemacht: data.gemacht, naechste: data.naechste, stand: data.stand });
-    if (log.length > 15) log.pop(); // max 15 Einträge
-    localStorage.setItem(LOG_KEY, JSON.stringify(log));
-    renderLog();
-
-    // Speichern-Bestätigung
-    const hint = document.getElementById('ue-hint');
-    hint.style.opacity = '1';
-    setTimeout(() => hint.style.opacity = '0', 2500);
-  }
-
-  function renderLog() {
-    const log = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-    const container = document.getElementById('ue-log');
-    if (!log.length) {
-      container.innerHTML = '<div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:16px 0">Noch keine Sessions gespeichert. Fülle die Felder oben aus und klick „Speichern".</div>';
+async function loadLastUebergabe() {
+  const el = document.getElementById('dash-uebergabe');
+  try {
+    const r = await fetch('/api/uebergabe');
+    const data = await r.json();
+    const c = data.current || {};
+    if (!c.ts) {
+      el.innerHTML = `<div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:16px 0">
+        <div style="font-size:1.3rem;margin-bottom:6px">📋</div>
+        Noch kein Protokoll gespeichert.<br>
+        <a href="uebergabe.html" style="color:var(--blue)">Jetzt erstellen →</a>
+      </div>`;
       return;
     }
-    container.innerHTML = log.map(e => `
-      <div class="log-entry">
-        <div class="log-entry-date">📅 ${e.ts}</div>
-        ${e.stand ? `<div class="log-entry-text" style="font-weight:600;margin-bottom:4px">Stand: ${e.stand}</div>` : ''}
-        ${e.gemacht ? `<div class="log-entry-text">✅ ${e.gemacht}</div>` : ''}
-        ${e.naechste ? `<div class="log-entry-text" style="margin-top:6px">▶️ Als nächstes: ${e.naechste}</div>` : ''}
-      </div>
-    `).join('');
+    el.innerHTML = `
+      <div style="font-size:.72rem;color:var(--violet);font-weight:800;margin-bottom:8px">📅 ${c.ts}</div>
+      ${c.stand    ? `<div style="font-size:.85rem;font-weight:600;margin-bottom:6px">🎯 ${c.stand}</div>` : ''}
+      ${c.gemacht  ? `<div style="font-size:.82rem;color:var(--ink2);margin-bottom:6px;white-space:pre-wrap">✅ ${c.gemacht}</div>` : ''}
+      ${c.naechste ? `<div style="font-size:.82rem;color:var(--ink2);white-space:pre-wrap">▶️ ${c.naechste}</div>` : ''}
+      <div style="margin-top:10px">
+        <a href="uebergabe.html" style="font-size:.78rem;color:var(--blue);text-decoration:none">Vollständig ansehen & aktualisieren →</a>
+      </div>`;
+  } catch {
+    el.innerHTML = `<div style="color:var(--ink3);font-size:.83rem;padding:12px 0">
+      Konnte nicht geladen werden. <a href="uebergabe.html" style="color:var(--blue)">Direkt öffnen →</a>
+    </div>`;
   }
-
-  function clearLog() {
-    if (confirm('Session-Verlauf wirklich löschen?')) {
-      localStorage.removeItem(LOG_KEY);
-      renderLog();
-    }
-  }
+}
+loadLastUebergabe();
 </script>
-
 </body>
 </html>

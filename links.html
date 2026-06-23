@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Links & Zugänge – Klartext Liebe Intern</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script src="_nav.js"></script>
+
+<main class="page-main">
+  <div class="page-hero">
+    <h1>🔗 Links & Zugänge</h1>
+    <p>Alle URLs, Repos, Zugangsdaten und der lokale Schnellstart.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+
+    <!-- Live-URLs -->
+    <div class="card">
+      <div class="card-head"><span>🌐</span><h2>Live-URLs</h2></div>
+      <div class="card-body">
+        <table class="info-table">
+          <tr><td>Kunden-Website</td><td><a href="https://klartextliebe.monika-oechtering.workers.dev" target="_blank">klartextliebe.monika-oechtering.workers.dev</a></td></tr>
+          <tr><td>Kunden-Portal (neu)</td><td><a href="https://klartextliebe-portal.pages.dev" target="_blank">klartextliebe-portal.pages.dev</a></td></tr>
+          <tr><td>Interne Roadmap</td><td><a href="https://klartext-roadmap.pages.dev" target="_blank">klartext-roadmap.pages.dev</a></td></tr>
+          <tr><td>Geplante Domain</td><td style="color:var(--ink3)">klartext-liebe.de (noch nicht registriert)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GitHub -->
+    <div class="card">
+      <div class="card-head"><span>🐙</span><h2>GitHub Repos</h2></div>
+      <div class="card-body">
+        <table class="info-table">
+          <tr><td>Kunden-Website</td><td><a href="https://github.com/oechteli/klartextliebe" target="_blank">oechteli/klartextliebe</a></td></tr>
+          <tr><td>Interne Roadmap</td><td><a href="https://github.com/oechteli/klartext-roadmap" target="_blank">oechteli/klartext-roadmap</a></td></tr>
+          <tr><td>Kunden-Portal</td><td><a href="https://github.com/oechteli/klartextliebe-portal" target="_blank">oechteli/klartextliebe-portal</a></td></tr>
+          <tr><td>Deploy-Branch</td><td><code>main</code></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Lokale Pfade -->
+    <div class="card">
+      <div class="card-head"><span>💻</span><h2>Lokale Pfade (Windows)</h2></div>
+      <div class="card-body">
+        <table class="info-table">
+          <tr><td>Kunden-Website</td><td><code>C:\Users\mail\klartext-liebe</code></td></tr>
+          <tr><td>Interne Roadmap</td><td><code>C:\Users\mail\klartext-roadmap</code></td></tr>
+          <tr><td>Kunden-Portal</td><td><code>C:\Users\mail\klartextliebe-portal</code></td></tr>
+          <tr><td>Obsidian-Notiz</td><td><code>02 Projekte/Klartext Liebe.md</code></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Admin-Dashboards -->
+    <div class="card">
+      <div class="card-head"><span>⚙️</span><h2>Admin-Dashboards</h2></div>
+      <div class="card-body">
+        <table class="info-table">
+          <tr><td>Cloudflare</td><td><a href="https://dash.cloudflare.com" target="_blank">dash.cloudflare.com</a></td></tr>
+          <tr><td>Cloudflare Zero Trust</td><td><a href="https://one.dash.cloudflare.com" target="_blank">one.dash.cloudflare.com</a></td></tr>
+          <tr><td>GitHub</td><td><a href="https://github.com/oechteli" target="_blank">github.com/oechteli</a></td></tr>
+          <tr><td>Stripe (geplant)</td><td><a href="https://dashboard.stripe.com" target="_blank">dashboard.stripe.com</a></td></tr>
+          <tr><td>Supabase (geplant)</td><td><a href="https://supabase.com/dashboard" target="_blank">supabase.com/dashboard</a></td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Schnellstart -->
+  <div class="card" style="margin-top:18px">
+    <div class="card-head"><span>🚀</span><h2>Lokale Entwicklung – Schnellstart Kunden-Website</h2></div>
+    <div class="card-body">
+      <div class="code-block">
+<span class="c"># Kunden-Website</span>
+cd C:\Users\mail\klartext-liebe
+npm install          <span class="c"># einmalig</span>
+npm run dev          <span class="c"># startet auf http://localhost:3000</span>
+npm run build        <span class="c"># baut statische Seite → out/</span>
+
+<span class="c"># Änderung live bringen</span>
+git add -A
+git commit -m "Kurze Beschreibung der Änderung"
+git push             <span class="c"># → Cloudflare baut & deployed automatisch (~2 Min.)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hinweise -->
+  <div class="card" style="margin-top:18px">
+    <div class="card-head"><span>⚠️</span><h2>Wichtige Hinweise & Stolperfallen</h2></div>
+    <div class="card-body">
+      <ul style="font-size:.87rem;color:var(--ink2);line-height:2.2;padding-left:20px">
+        <li><strong>Nie npm 11 für package-lock.json nutzen</strong> → Cloudflare CI nutzt npm 10.9.2. Fix: <code>npx npm@10.9.2 install --package-lock-only</code></li>
+        <li><strong>Vor jedem Push</strong> lokal <code>npm run build</code> testen (Ordner <code>out/</code> wird erzeugt)</li>
+        <li><strong>Bilder:</strong> <code>images.unoptimized: true</code> in next.config.mjs nötig (statischer Export)</li>
+        <li><strong>Windows curl</strong> schlägt fehl → stattdessen PowerShell <code>Invoke-WebRequest</code> nutzen</li>
+        <li><strong>EBUSY-Fehler beim Build</strong> → einfach nochmal bauen (Antivirus blockiert kurz)</li>
+        <li><strong>Push auf main → automatisch live</strong> – also nur bewusst pushen, lokal vorher testen</li>
+        <li><strong>Markenfarben:</strong> Türkis <code>#3FB9C7</code> · Blau <code>#3B82C4</code> · Violett <code>#7C6BC4</code> · Creme <code>#FAF7F2</code></li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
