@@ -345,6 +345,112 @@
     }
     .link-pill:hover { border-color: var(--blue); }
 
+    /* ── ÜBERGABE ── */
+    .uebergabe-banner {
+      background: linear-gradient(135deg, #1E1B2E, #2D2850);
+      color: white;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .uebergabe-banner-icon { font-size: 2rem; }
+    .uebergabe-banner h2 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+    .uebergabe-banner p { font-size: .82rem; opacity: .75; }
+    .uebergabe-ts {
+      margin-left: auto;
+      text-align: right;
+      font-size: .78rem;
+      opacity: .7;
+      flex-shrink: 0;
+    }
+    .uebergabe-ts strong { display: block; font-size: .9rem; opacity: 1; }
+
+    .ue-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .ue-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--cream);
+    }
+    .ue-card-head h3 { font-size: .9rem; font-weight: 700; flex:1; }
+    .ue-card-body { padding: 16px 18px; }
+
+    .ue-editable {
+      width: 100%;
+      min-height: 90px;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: .88rem;
+      line-height: 1.6;
+      color: var(--ink);
+      background: #FAFAFA;
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .ue-editable:focus { border-color: var(--violet); border-style: solid; background: white; }
+
+    .ue-save-btn {
+      margin-top: 10px;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 20px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .ue-save-btn:hover { opacity: .9; }
+    .ue-saved-hint {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: .8rem;
+      color: var(--teal);
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .log-entry {
+      border-left: 3px solid var(--violet);
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      background: var(--open-bg);
+      border-radius: 0 8px 8px 0;
+    }
+    .log-entry-date {
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--violet);
+      margin-bottom: 4px;
+    }
+    .log-entry-text { font-size: .85rem; color: var(--ink2); white-space: pre-wrap; }
+
+    .push-anleitung {
+      background: var(--ink);
+      color: #A8FF78;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: monospace;
+      font-size: .8rem;
+      line-height: 1.8;
+    }
+    .push-anleitung .comment { color: #888; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .nav-btn { padding: 10px 12px; font-size: .8rem; }
@@ -370,6 +476,7 @@
       <button class="nav-btn active" onclick="showTab('roadmap', this)">🗺️ Roadmap</button>
       <button class="nav-btn" onclick="showTab('architektur', this)">🏗️ Architektur</button>
       <button class="nav-btn" onclick="showTab('links', this)">🔗 Links & Zugänge</button>
+      <button class="nav-btn" onclick="showTab('uebergabe', this)">📋 Übergabe</button>
     </div>
   </nav>
 </header>
@@ -834,6 +941,129 @@ git add -A &amp;&amp; git commit -m "..." &amp;&amp; git push   # → automatisc
 
   </div><!-- /tab-links -->
 
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TAB: ÜBERGABEPROTOKOLL                               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div id="tab-uebergabe" class="tab">
+
+    <!-- Banner -->
+    <div class="uebergabe-banner">
+      <div class="uebergabe-banner-icon">📋</div>
+      <div>
+        <h2>Übergabeprotokoll</h2>
+        <p>Füll diese Seite aus, bevor du den PC verlässt – so kann jeder sofort weitermachen.</p>
+      </div>
+      <div class="uebergabe-ts">
+        <strong id="ue-last-saved">Noch nicht gespeichert</strong>
+        Zuletzt aktualisiert
+      </div>
+    </div>
+
+    <!-- Aktueller Stand -->
+    <div class="ue-card">
+      <div class="ue-card-head">
+        <span>🎯</span>
+        <h3>Wo stehen wir gerade?</h3>
+        <span style="font-size:.75rem;color:var(--ink3)">Aktuelle Phase &amp; offener Punkt</span>
+      </div>
+      <div class="ue-card-body">
+        <textarea class="ue-editable" id="ue-stand" placeholder="Beispiel: Phase 1 läuft – Impressum ist offen. Roadmap-Seite ist live auf klartext-roadmap.pages.dev."></textarea>
+        <div style="margin-top:10px;font-size:.8rem;color:var(--ink3)">💡 Tipp: Schreib in 1–2 Sätzen, was der aktuelle Fokus ist.</div>
+      </div>
+    </div>
+
+    <!-- Zuletzt gemacht -->
+    <div class="ue-card">
+      <div class="ue-card-head">
+        <span>✅</span>
+        <h3>Was wurde in dieser Sitzung gemacht?</h3>
+      </div>
+      <div class="ue-card-body">
+        <textarea class="ue-editable" id="ue-gemacht" placeholder="Beispiel:&#10;– Roadmap-Seite auf klartext-roadmap.pages.dev deployed&#10;– Kunden-Dashboard Mockup angelegt&#10;– GitHub-Repo oechteli/klartext-roadmap erstellt"></textarea>
+      </div>
+    </div>
+
+    <!-- Nächste Schritte -->
+    <div class="ue-card">
+      <div class="ue-card-head">
+        <span>▶️</span>
+        <h3>Nächste konkrete Schritte</h3>
+        <span style="font-size:.75rem;color:var(--ink3)">So konkret, dass jemand anderes sofort loslegen kann</span>
+      </div>
+      <div class="ue-card-body">
+        <textarea class="ue-editable" id="ue-naechste" style="min-height:110px" placeholder="Beispiel:&#10;1. app/impressum/page.tsx öffnen → echten Text einfügen (Name, Adresse, E-Mail)&#10;2. app/datenschutz/page.tsx → Vorlage von eRecht24 einfügen&#10;3. npm run build lokal testen&#10;4. git push → live"></textarea>
+      </div>
+    </div>
+
+    <!-- Offene Fragen -->
+    <div class="ue-card">
+      <div class="ue-card-head">
+        <span>❓</span>
+        <h3>Offene Fragen / Blocker</h3>
+      </div>
+      <div class="ue-card-body">
+        <textarea class="ue-editable" id="ue-blocker" placeholder="Beispiel:&#10;– Welche Adresse soll ins Impressum? (Monika entscheidet)&#10;– Stripe-Konto noch nicht eröffnet"></textarea>
+        <div style="margin-top:10px">
+          <button class="ue-save-btn" onclick="saveUebergabe()">💾 Jetzt speichern</button>
+          <span class="ue-saved-hint" id="ue-hint">✓ Gespeichert</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Session-Log -->
+    <div class="ue-card">
+      <div class="ue-card-head">
+        <span>📜</span>
+        <h3>Session-Verlauf</h3>
+        <span style="font-size:.75rem;color:var(--ink3)">Automatisch befüllt beim Speichern</span>
+        <button onclick="clearLog()" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:6px;padding:3px 10px;font-size:.72rem;color:var(--ink3);cursor:pointer">Log löschen</button>
+      </div>
+      <div class="ue-card-body" id="ue-log">
+        <!-- Einträge werden hier per JS eingefügt -->
+        <div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:16px 0">
+          Noch keine Sessions gespeichert. Fülle die Felder oben aus und klick „Speichern".
+        </div>
+      </div>
+    </div>
+
+    <!-- Push-Anleitung -->
+    <div class="ue-card">
+      <div class="ue-card-head">
+        <span>🖥️</span>
+        <h3>Auf anderem PC weitermachen</h3>
+      </div>
+      <div class="ue-card-body">
+        <p style="font-size:.85rem;color:var(--ink2);margin-bottom:14px">
+          Die Felder oben werden im Browser (localStorage) gespeichert – nur auf <em>diesem</em> PC. Damit du von <strong>jedem PC</strong> aus den aktuellen Stand siehst, die Roadmap-Seite selbst aktualisieren und auf GitHub pushen:
+        </p>
+        <div class="push-anleitung">
+          <span class="comment"># 1. Roadmap-Ordner öffnen</span><br>
+          cd C:\Users\mail\klartext-roadmap<br><br>
+          <span class="comment"># 2. index.html bearbeiten (Übergabe-Inhalt direkt im &lt;script&gt; unten aktualisieren)</span><br>
+          <span class="comment"># → Alternativ: Claude bitten, den Stand einzutragen</span><br><br>
+          <span class="comment"># 3. Committen &amp; pushen → Cloudflare deployed automatisch</span><br>
+          git add index.html<br>
+          git commit -m "Übergabe: [Datum] – [was wurde gemacht]"<br>
+          git push
+        </div>
+        <p style="font-size:.8rem;color:var(--ink3);margin-top:12px">
+          📌 GitHub-Repo: <a href="https://github.com/oechteli/klartext-roadmap" target="_blank" style="color:var(--blue)">github.com/oechteli/klartext-roadmap</a> &nbsp;|&nbsp;
+          Live-URL: <a href="https://klartext-roadmap.pages.dev" target="_blank" style="color:var(--blue)">klartext-roadmap.pages.dev</a>
+        </p>
+
+        <div style="margin-top:20px;background:var(--done-bg);border:1px solid var(--done-bdr);border-radius:10px;padding:14px 16px;">
+          <div style="font-weight:700;font-size:.88rem;margin-bottom:8px;color:#065F46">💡 Claude als Übergabe-Helfer</div>
+          <div style="font-size:.82rem;color:var(--ink2);line-height:1.7">
+            Du kannst Claude Code einfach sagen:<br>
+            <em>„Bitte trage in die Roadmap-Seite ein, was wir heute gemacht haben, und push das auf GitHub."</em><br>
+            Claude aktualisiert dann automatisch den Stand und committed die Seite.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-uebergabe -->
+
 </main>
 
 <script>
@@ -842,9 +1072,78 @@ git add -A &amp;&amp; git commit -m "..." &amp;&amp; git push   # → automatisc
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
+    if (name === 'uebergabe') loadUebergabe();
   }
   function togglePhase(id) {
     document.getElementById(id).classList.toggle('open');
+  }
+
+  /* ── ÜBERGABE: localStorage-Logik ── */
+  const UE_KEY = 'kl_uebergabe';
+  const LOG_KEY = 'kl_ue_log';
+
+  function loadUebergabe() {
+    const data = JSON.parse(localStorage.getItem(UE_KEY) || '{}');
+    if (data.stand)    document.getElementById('ue-stand').value    = data.stand;
+    if (data.gemacht)  document.getElementById('ue-gemacht').value  = data.gemacht;
+    if (data.naechste) document.getElementById('ue-naechste').value = data.naechste;
+    if (data.blocker)  document.getElementById('ue-blocker').value  = data.blocker;
+    if (data.ts) {
+      document.getElementById('ue-last-saved').textContent = data.ts;
+    }
+    renderLog();
+  }
+
+  function saveUebergabe() {
+    const now = new Date();
+    const ts = now.toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'})
+             + ' ' + now.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'}) + ' Uhr';
+
+    const data = {
+      stand:    document.getElementById('ue-stand').value,
+      gemacht:  document.getElementById('ue-gemacht').value,
+      naechste: document.getElementById('ue-naechste').value,
+      blocker:  document.getElementById('ue-blocker').value,
+      ts
+    };
+    localStorage.setItem(UE_KEY, JSON.stringify(data));
+    document.getElementById('ue-last-saved').textContent = ts;
+
+    // Log-Eintrag hinzufügen
+    const log = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+    log.unshift({ ts, gemacht: data.gemacht, naechste: data.naechste, stand: data.stand });
+    if (log.length > 15) log.pop(); // max 15 Einträge
+    localStorage.setItem(LOG_KEY, JSON.stringify(log));
+    renderLog();
+
+    // Speichern-Bestätigung
+    const hint = document.getElementById('ue-hint');
+    hint.style.opacity = '1';
+    setTimeout(() => hint.style.opacity = '0', 2500);
+  }
+
+  function renderLog() {
+    const log = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+    const container = document.getElementById('ue-log');
+    if (!log.length) {
+      container.innerHTML = '<div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:16px 0">Noch keine Sessions gespeichert. Fülle die Felder oben aus und klick „Speichern".</div>';
+      return;
+    }
+    container.innerHTML = log.map(e => `
+      <div class="log-entry">
+        <div class="log-entry-date">📅 ${e.ts}</div>
+        ${e.stand ? `<div class="log-entry-text" style="font-weight:600;margin-bottom:4px">Stand: ${e.stand}</div>` : ''}
+        ${e.gemacht ? `<div class="log-entry-text">✅ ${e.gemacht}</div>` : ''}
+        ${e.naechste ? `<div class="log-entry-text" style="margin-top:6px">▶️ Als nächstes: ${e.naechste}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function clearLog() {
+    if (confirm('Session-Verlauf wirklich löschen?')) {
+      localStorage.removeItem(LOG_KEY);
+      renderLog();
+    }
   }
 </script>
 
