@@ -1,137 +1,341 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard – Klartext Liebe Intern</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klartext Liebe – Interne Roadmap</title>
+<style>
+  :root { --bg:#f8fafc;--card:#fff;--border:#e2e8f0;--rose:#e11d48;--rose-d:#be123c;--violet:#7c3aed;--green:#16a34a;--amber:#d97706;--text:#0f172a;--soft:#64748b;--radius:14px; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+  nav{background:rgba(255,255,255,.97);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;}
+  .nav-logo{font-weight:800;font-size:17px;color:var(--rose-d);padding:12px 20px 12px 0;border-right:1px solid var(--border);margin-right:8px;line-height:1.3;white-space:nowrap;}
+  .nav-logo span{color:var(--soft);font-weight:400;font-size:11px;display:block;}
+  .nav-links{display:flex;gap:2px;flex-wrap:wrap;padding:8px 0;}
+  .nav-links a{color:var(--soft);text-decoration:none;padding:7px 13px;border-radius:8px;font-size:13px;font-weight:500;transition:all .15s;cursor:pointer;white-space:nowrap;}
+  .nav-links a:hover,.nav-links a.active{background:#fff1f2;color:var(--rose-d);}
+  .page{display:none;max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+  .page.active{display:block;}
+  .hero{background:linear-gradient(135deg,#fff1f2 0%,#ffe4e6 50%,#fff1f2 100%);border-radius:var(--radius);padding:44px 38px;margin-bottom:28px;border:1px solid #fecdd3;}
+  .hero h1{font-size:32px;font-weight:800;margin-bottom:10px;}.hero h1 span{color:var(--rose-d);}
+  .hero p{color:var(--soft);font-size:15px;line-height:1.75;max-width:580px;}
+  .hero-stats{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap;}
+  .stat{background:#fff;border-radius:10px;padding:12px 18px;border:1px solid var(--border);}
+  .stat-n{font-size:24px;font-weight:800;color:var(--rose-d);}
+  .stat-l{font-size:11px;color:var(--soft);margin-top:2px;}
+  .progress-section{background:var(--card);border-radius:var(--radius);padding:20px 24px;border:1px solid var(--border);margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .progress-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:500;}
+  .progress-bar{background:#f1f5f9;border-radius:999px;height:9px;overflow:hidden;}
+  .progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--rose),#fb7185);}
+  .phase-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);overflow:hidden;}
+  .phase-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;}
+  .phase-num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0;}
+  .phase-num.done{background:var(--green);color:#fff;}.phase-num.next{background:var(--rose);color:#fff;}.phase-num.plan{background:#e2e8f0;color:var(--soft);}.phase-num.later{background:#ede9fe;color:var(--violet);}
+  .phase-title-wrap{flex:1;}.phase-title-wrap h3{font-size:15px;font-weight:700;}.phase-title-wrap p{color:var(--soft);font-size:12px;margin-top:2px;}
+  .phase-badge{font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;}
+  .badge-done{background:#dcfce7;color:var(--green);}.badge-next{background:#fff1f2;color:var(--rose-d);}.badge-plan{background:#f1f5f9;color:var(--soft);}.badge-later{background:#ede9fe;color:var(--violet);}
+  .phase-arrow{color:var(--soft);transition:transform .2s;font-size:11px;}
+  .phase-card.open .phase-arrow{transform:rotate(180deg);}
+  .phase-body{padding:20px;display:none;background:#fffafb;border-top:1px solid var(--border);}
+  .phase-card.open .phase-body{display:block;}
+  .phase-why{color:var(--soft);font-size:13px;line-height:1.8;margin-bottom:16px;background:#fff;padding:13px 15px;border-radius:9px;border-left:3px solid var(--rose);}
+  .checklist{display:flex;flex-direction:column;gap:8px;}
+  .check-item{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;background:#fff;border-radius:9px;border:1px solid var(--border);}
+  .check-item.done-item{border-color:#bbf7d0;}
+  .check-box{width:20px;height:20px;border-radius:5px;flex-shrink:0;display:grid;place-items:center;margin-top:2px;}
+  .check-box.checked{background:var(--green);}.check-box.unchecked{background:#f1f5f9;border:2px solid #cbd5e1;}
+  .check-icon{font-size:11px;color:#fff;font-weight:700;}
+  .check-text{flex:1;}.check-text strong{font-size:13px;font-weight:600;display:block;margin-bottom:2px;}.check-text span{font-size:12px;color:var(--soft);line-height:1.6;}
+  .check-tag{font-size:10px;padding:2px 7px;border-radius:999px;margin-left:auto;align-self:flex-start;white-space:nowrap;font-weight:600;border:1px solid #e2e8f0;}
+  .tag-tech{background:#dbeafe;color:#1d4ed8;border-color:#bfdbfe;}.tag-legal{background:#fef3c7;color:#92400e;border-color:#fde68a;}.tag-stripe{background:#f0fdf4;color:var(--green);border-color:#bbf7d0;}
+  .tag-supa{background:#ede9fe;color:var(--violet);border-color:#ddd6fe;}.tag-content{background:#fce7f3;color:#9d174d;border-color:#fbcfe8;}.tag-ai{background:#f5f3ff;color:var(--violet);border-color:#ddd6fe;}
+  .warn-box{background:#fffbeb;border:1px solid #fde68a;border-radius:9px;padding:13px 15px;margin-bottom:14px;font-size:13px;line-height:1.7;color:#78350f;}
+  .page-header{margin-bottom:24px;}.page-header h2{font-size:24px;font-weight:800;margin-bottom:4px;}.page-header p{color:var(--soft);font-size:14px;line-height:1.7;}
+  .info-box{background:#fff1f2;border:1px solid #fecdd3;border-radius:9px;padding:13px 16px;margin-bottom:16px;font-size:13px;line-height:1.7;}
+  .info-box strong{color:var(--rose-d);}
+  .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose-d);margin:22px 0 9px;}
+  .arch-block{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .arch-block h3{font-size:14px;font-weight:700;margin-bottom:5px;}.arch-block p{color:var(--soft);font-size:13px;line-height:1.7;}
+  .arch-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+  @media(max-width:600px){.arch-cols{grid-template-columns:1fr;}}
+  .arch-col{background:#f8fafc;border-radius:9px;padding:13px;border:1px solid var(--border);}
+  .arch-col h4{font-size:11px;font-weight:700;color:var(--rose-d);margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em;}
+  .arch-col ul{list-style:none;display:flex;flex-direction:column;gap:4px;}
+  .arch-col ul li{font-size:12px;color:var(--soft);display:flex;gap:7px;}
+  .arch-col ul li::before{content:'›';color:var(--rose);font-weight:700;flex-shrink:0;}
+  .arch-cols-3{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+  .two-boxes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  @media(max-width:600px){.two-boxes{grid-template-columns:1fr;}}
+  .box-highlight{border:2px solid var(--rose);border-radius:12px;padding:16px;}
+  .box-highlight2{border:2px solid var(--violet);border-radius:12px;padding:16px;}
+  .box-highlight h4,.box-highlight2 h4{font-size:13px;font-weight:800;margin-bottom:4px;}
+  .box-highlight p,.box-highlight2 p{font-size:12px;color:var(--soft);line-height:1.6;}
+  .box-mono{font-family:monospace;font-size:11px;color:var(--violet);margin-top:8px;}
+  .link-table{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .link-row{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #f1f5f9;}
+  .link-row:last-child{border-bottom:none;}
+  .link-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .link-name{font-size:13px;font-weight:600;min-width:190px;}.link-url{font-family:monospace;font-size:11px;color:var(--rose-d);flex:1;}
+  .link-status{font-size:11px;padding:2px 7px;border-radius:999px;font-weight:600;}
+  .back-top{position:fixed;bottom:28px;right:28px;background:var(--rose);color:#fff;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:16px;display:grid;place-items:center;box-shadow:0 4px 14px rgba(225,29,72,.3);z-index:50;}
+</style>
 </head>
 <body>
-<script src="_nav.js"></script>
-
-<main class="page-main">
-  <div class="page-hero">
-    <h1>Dashboard</h1>
-    <p>Schnellübersicht · Stand: 23. Juni 2026</p>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">💕 Klartext Liebe<span>Interne Roadmap</span></div>
+    <div class="nav-links">
+      <a onclick="show('uebersicht')" class="active" id="nav-uebersicht">🏠 Übersicht</a>
+      <a onclick="show('roadmap')" id="nav-roadmap">📋 Roadmap</a>
+      <a onclick="show('architektur')" id="nav-architektur">🏗️ Architektur</a>
+      <a onclick="show('links')" id="nav-links">🔗 Links</a>
+    </div>
   </div>
+</nav>
 
-  <!-- Statistiken -->
-  <div class="stats">
-    <div class="stat"><div class="stat-num" style="color:#3FB9C7">1</div><div class="stat-label">Phase abgeschlossen</div></div>
-    <div class="stat"><div class="stat-num" style="color:#F0945A">2</div><div class="stat-label">Phasen aktiv</div></div>
-    <div class="stat"><div class="stat-num" style="color:#7C6BC4">6</div><div class="stat-label">Phasen geplant</div></div>
-    <div class="stat"><div class="stat-num" style="color:#3B82C4">15</div><div class="stat-label">Aufgaben erledigt</div></div>
-    <div class="stat"><div class="stat-num" style="color:#8E8AA8">24</div><div class="stat-label">Aufgaben offen</div></div>
+<!-- ÜBERSICHT -->
+<div class="page active" id="page-uebersicht">
+  <div class="hero">
+    <h1>Die <span>Dating-Plattform</span> für Singles</h1>
+    <p>Klartext Liebe ist Monikas Singlecoaching- und Dating-Plattform. Next.js-App live auf Cloudflare, YouTube-Kanal @klartextliebe als Funnel. 9 Phasen von der leeren Seite bis zur vollständigen Plattform.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">9</div><div class="stat-l">Phasen gesamt</div></div>
+      <div class="stat"><div class="stat-n">2</div><div class="stat-l">Phasen abgeschlossen</div></div>
+      <div class="stat"><div class="stat-n">~22%</div><div class="stat-l">Gesamtfortschritt</div></div>
+      <div class="stat"><div class="stat-n">B2C</div><div class="stat-l">Coaching + Community</div></div>
+    </div>
   </div>
+  <div class="progress-section">
+    <div class="progress-label"><span>Gesamtfortschritt (9 Phasen)</span><span style="color:var(--rose-d);font-weight:700">~22%</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:22%"></div></div>
+  </div>
+  <div class="info-box"><strong>Stand 23.06.2026:</strong> Phase 0 (Fundament) und Phase 1 (Rechtliches) sind abgeschlossen. Die Website ist live. Phase 2 (Inhalte & Domain) ist als nächstes dran. Die vollständige Roadmap mit allen Aufgaben ist unter "Roadmap" zu finden.</div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-
-    <!-- Nächste Schritte -->
-    <div>
-      <div class="card">
-        <div class="card-head"><span>▶️</span><h2>Nächste konkrete Schritte</h2></div>
-        <div class="card-body">
-          <div class="next-steps">
-            <a class="next-step" href="roadmap.html#p1">
-              <div class="next-step-num">1</div>
-              <div class="next-step-body">
-                <div class="next-step-name">⚠️ Impressum & Datenschutz ausfüllen</div>
-                <div class="next-step-detail">Rechtlich dringend – vor echter Datenerhebung nötig</div>
-              </div>
-              <span style="color:var(--ink3)">→</span>
-            </a>
-            <a class="next-step" href="roadmap.html#p2">
-              <div class="next-step-num">2</div>
-              <div class="next-step-body">
-                <div class="next-step-name">📸 Profil-Foto & YouTube-Video einbetten</div>
-                <div class="next-step-detail">app/ueber-mich + app/youtube anpassen</div>
-              </div>
-              <span style="color:var(--ink3)">→</span>
-            </a>
-            <a class="next-step" href="roadmap.html#p2">
-              <div class="next-step-num">3</div>
-              <div class="next-step-body">
-                <div class="next-step-name">🌐 Domain klartext-liebe.de registrieren</div>
-                <div class="next-step-detail">Bei Cloudflare kaufen → DNS → Build-Variable setzen</div>
-              </div>
-              <span style="color:var(--ink3)">→</span>
-            </a>
-            <a class="next-step" href="roadmap.html#p3">
-              <div class="next-step-num">4</div>
-              <div class="next-step-body">
-                <div class="next-step-name">💳 Stripe-Konto eröffnen</div>
-                <div class="next-step-detail">Payment Links anlegen → Buttons aktivieren</div>
-              </div>
-              <span style="color:var(--ink3)">→</span>
-            </a>
-          </div>
-        </div>
+  <div class="section-title">Abgeschlossen</div>
+  <div class="phase-card open" onclick="togglePhase(this)">
+    <div class="phase-head">
+      <div class="phase-num done">0</div>
+      <div class="phase-title-wrap"><h3>Fundament & Live-Deploy</h3><p>Next.js, alle Seiten, SEO, GitHub, Cloudflare · Juni 2026</p></div>
+      <span class="phase-badge badge-done">✅ Abgeschlossen</span>
+      <span class="phase-arrow">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Das Fundament steht: Website live, sicher, SEO-optimiert, bei jedem GitHub-Push automatisch aktualisiert.</div>
+      <div class="checklist">
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Next.js 14 + TypeScript + Tailwind CSS</strong><span>App Router, statischer Export, Markenfarben konfiguriert.</span></div><span class="check-tag tag-tech">Tech</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Alle 9 Seiten angelegt</strong><span>Start, Über mich, Coaching, Community, Analyse, Marktplatz, Events, YouTube, Kontakt + 404.</span></div><span class="check-tag tag-tech">Tech</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>SEO komplett</strong><span>Meta-Tags, Canonical URLs, Sitemap.xml, Robots.txt, OpenGraph, JSON-LD.</span></div><span class="check-tag tag-tech">SEO</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>GitHub + Cloudflare Auto-Deploy</strong><span>oechteli/klartextliebe → main → live auf workers.dev.</span></div><span class="check-tag tag-tech">Deploy</span></div>
       </div>
     </div>
+  </div>
 
-    <!-- Letztes Übergabeprotokoll -->
-    <div>
-      <div class="card">
-        <div class="card-head">
-          <span>📋</span><h2>Letztes Übergabeprotokoll</h2>
-          <a href="uebergabe.html" style="font-size:.78rem;color:var(--blue);text-decoration:none;margin-left:auto">Alle →</a>
-        </div>
-        <div class="card-body" id="dash-uebergabe">
-          <div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:20px 0">
-            <div style="font-size:1.5rem;margin-bottom:8px">📋</div>
-            Wird geladen…
-          </div>
-        </div>
+  <div class="phase-card open" onclick="togglePhase(this)">
+    <div class="phase-head">
+      <div class="phase-num done">1</div>
+      <div class="phase-title-wrap"><h3>Rechtliches & Vertrauen</h3><p>Impressum, Datenschutz · 23.06.2026</p></div>
+      <span class="phase-badge badge-done">✅ Abgeschlossen</span>
+      <span class="phase-arrow">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Pflicht vor jeder echten Nutzerdaten-Erhebung. Impressum und Datenschutzerklärung sind live.</div>
+      <div class="checklist">
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Impressum ausgefüllt</strong><span>Name, E-Mail, Adresse. Datei: app/impressum/page.tsx</span></div><span class="check-tag tag-legal">Rechtl.</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Datenschutzerklärung ausgefüllt</strong><span>Supabase, Stripe, Cloudflare erwähnt. Datei: app/datenschutz/page.tsx</span></div><span class="check-tag tag-legal">Rechtl.</span></div>
       </div>
+      <div class="warn-box">⚠️ <strong>Noch offen:</strong> Adresse in app/impressum/page.tsx nachtragen.</div>
+    </div>
+  </div>
 
-      <!-- Live-URLs -->
-      <div class="card">
-        <div class="card-head"><span>🌐</span><h2>Live-URLs</h2></div>
-        <div class="card-body">
-          <table class="info-table">
-            <tr><td>Kunden-Website</td><td><a href="https://klartextliebe.monika-oechtering.workers.dev" target="_blank">klartextliebe.monika-oechtering.workers.dev</a></td></tr>
-            <tr><td>Kunden-Portal (neu)</td><td><a href="https://klartextliebe-portal.pages.dev" target="_blank">klartextliebe-portal.pages.dev</a></td></tr>
-            <tr><td>Diese Seite</td><td><a href="https://klartext-roadmap.pages.dev" target="_blank">klartext-roadmap.pages.dev</a></td></tr>
-            <tr><td>GitHub (Kunden)</td><td><a href="https://github.com/oechteli/klartextliebe" target="_blank">oechteli/klartextliebe</a></td></tr>
-            <tr><td>GitHub (Roadmap)</td><td><a href="https://github.com/oechteli/klartext-roadmap" target="_blank">oechteli/klartext-roadmap</a></td></tr>
-          </table>
-        </div>
+  <div class="section-title">Als nächstes</div>
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head">
+      <div class="phase-num next">2</div>
+      <div class="phase-title-wrap"><h3>Inhalte & Medien vervollständigen</h3><p>Eigenes Foto, YouTube-Video, Domain klartext-liebe.de</p></div>
+      <span class="phase-badge badge-next">🔜 Als nächstes</span>
+      <span class="phase-arrow">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="phase-why">Vertrauen entsteht durch ein echtes Gesicht. Eine eigene Domain wirkt professioneller als workers.dev.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Profil-Foto hochladen</strong><span>Foto unter public/brand/ ablegen, in app/ueber-mich/page.tsx einbinden.</span></div><span class="check-tag tag-content">Inhalt</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>YouTube-Video einbetten</strong><span>Erstes @klartextliebe-Video in app/youtube/page.tsx einbinden.</span></div><span class="check-tag tag-content">Inhalt</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Domain klartext-liebe.de verbinden</strong><span>Bei Cloudflare kaufen → DNS → NEXT_PUBLIC_SITE_URL als Build-Variable setzen.</span></div><span class="check-tag tag-tech">Domain</span></div>
       </div>
     </div>
-
   </div>
-</main>
+</div>
 
+<!-- ROADMAP -->
+<div class="page" id="page-roadmap">
+  <div class="page-header"><h2>📋 Vollständige Roadmap</h2><p>9 Phasen von der leeren Seite bis zur fertigen Plattform.</p></div>
+
+  <div class="phase-card open" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num done">0</div><div class="phase-title-wrap"><h3>Fundament & Live-Deploy</h3><p>Juni 2026</p></div><span class="phase-badge badge-done">✅ Abgeschlossen</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="checklist">
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Next.js 14 + TypeScript + Tailwind CSS</strong><span>App Router, statischer Export, Markenfarben konfiguriert.</span></div><span class="check-tag tag-tech">Tech</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Alle 9 Seiten angelegt</strong><span>Start, Über mich, Coaching, Community, Analyse, Marktplatz, Events, YouTube, Kontakt + 404.</span></div><span class="check-tag tag-tech">Tech</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>SEO komplett</strong><span>Meta-Tags, Canonical URLs, Sitemap.xml, Robots.txt, OpenGraph-Bilder, JSON-LD.</span></div><span class="check-tag tag-tech">SEO</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Branding & Favicon</strong><span>Herz-Logo im Gradient, Web-App-Manifest, Theme-Color.</span></div><span class="check-tag tag-tech">Design</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Accessibility & Security-Header</strong><span>Skip-Link, HSTS, X-Frame-Options, CSP, Referrer-Policy.</span></div><span class="check-tag tag-tech">A11y</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>GitHub + Cloudflare Auto-Deploy</strong><span>oechteli/klartextliebe → main → automatisch live auf workers.dev.</span></div><span class="check-tag tag-tech">Deploy</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card open" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num done">1</div><div class="phase-title-wrap"><h3>Rechtliches & Vertrauen</h3><p>23.06.2026</p></div><span class="phase-badge badge-done">✅ Abgeschlossen</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Sobald echte E-Mail-Adressen gesammelt werden, ist ein vollständiges Impressum und eine DSGVO-konforme Datenschutzerklärung Pflicht.</div>
+      <div class="checklist">
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Impressum ausgefüllt</strong><span>Name, Adresse, E-Mail — app/impressum/page.tsx</span></div><span class="check-tag tag-legal">Rechtl.</span></div>
+        <div class="check-item done-item"><div class="check-box checked"><span class="check-icon">✓</span></div><div class="check-text"><strong>Datenschutzerklärung ausgefüllt</strong><span>Supabase, Stripe, Cloudflare erwähnt — app/datenschutz/page.tsx</span></div><span class="check-tag tag-legal">Rechtl.</span></div>
+      </div>
+      <div class="warn-box">⚠️ Adresse in app/impressum/page.tsx noch nachtragen.</div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num next">2</div><div class="phase-title-wrap"><h3>Inhalte & Medien</h3><p>Parallel möglich — Foto, YouTube-Video, eigene Domain</p></div><span class="phase-badge badge-next">🔜 Als nächstes</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Vertrauen entsteht durch ein echtes Gesicht. Eine eigene Domain (klartext-liebe.de) wirkt professioneller als workers.dev.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Profil-Foto hochladen</strong><span>Foto unter public/brand/ ablegen, in app/ueber-mich/page.tsx einbinden.</span></div><span class="check-tag tag-content">Inhalt</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>YouTube-Video einbetten</strong><span>Erstes @klartextliebe-Video in app/youtube/page.tsx einbinden.</span></div><span class="check-tag tag-content">Inhalt</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Domain klartext-liebe.de verbinden</strong><span>Bei Cloudflare kaufen → DNS → NEXT_PUBLIC_SITE_URL als Build-Variable setzen.</span></div><span class="check-tag tag-tech">Domain</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num plan">3</div><div class="phase-title-wrap"><h3>Erste Einnahmen – Stripe</h3><p>Coaching-Pakete kaufbar machen — ohne eigenes Backend</p></div><span class="phase-badge badge-plan">📋 Geplant</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Stripe Payment Links funktionieren ohne eigenen Server. Monika erstellt in Stripe einen Link, der wird eingetragen — Buttons sofort kaufbar.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Stripe-Konto eröffnen & verifizieren</strong><span>stripe.com → Konto für Monika Oechtering, Bankverbindung hinterlegen.</span></div><span class="check-tag tag-stripe">Stripe</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Payment Links für Coaching-Pakete anlegen</strong><span>z.B. "Erstgespräch 60 min", "3-Monats-Begleitung" — je ein Stripe Payment Link.</span></div><span class="check-tag tag-stripe">Stripe</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Links in lib/stripe-links.ts eintragen</strong><span>Platzhalter ersetzen → Buttons zeigen echten Kauflink.</span></div><span class="check-tag tag-stripe">Stripe</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>"Bald buchbar"-Hinweis entfernen</strong><span>Platzhalter-Buttons durch echte Kauf-Buttons ersetzen.</span></div><span class="check-tag tag-stripe">Stripe</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num plan">4</div><div class="phase-title-wrap"><h3>Datenbank – Supabase</h3><p>Waitlist und Kontaktformular speichern echte Daten</p></div><span class="phase-badge badge-plan">📋 Geplant</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Formulare simulieren aktuell nur das Absenden. Mit Supabase landen Anfragen wirklich in einer Datenbank, die Monika einsehen kann.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Supabase-Projekt erstellen</strong><span>supabase.com → neues Projekt, Region EU-West (DSGVO).</span></div><span class="check-tag tag-supa">Supabase</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Umgebungsvariablen setzen</strong><span>.env.local: NEXT_PUBLIC_SUPABASE_URL und NEXT_PUBLIC_SUPABASE_ANON_KEY.</span></div><span class="check-tag tag-supa">Supabase</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Datenbankschema einrichten</strong><span>Migration supabase/migrations/0001_init.sql ausführen.</span></div><span class="check-tag tag-supa">Supabase</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Waitlist & Kontaktformular aktivieren</strong><span>Mock-Insert durch echten Supabase-Insert ersetzen.</span></div><span class="check-tag tag-supa">Supabase</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Build-Variablen in Cloudflare setzen</strong><span>Workers → Einstellungen → Umgebungsvariablen.</span></div><span class="check-tag tag-tech">Deploy</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num plan">5</div><div class="phase-title-wrap"><h3>Login & Kunden-Dashboard</h3><p>Kunden können sich einloggen und gebuchte Pakete sehen</p></div><span class="phase-badge badge-plan">📋 Geplant</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Nach dem Kauf bekommen Kunden Zugang zum persönlichen Bereich: Buchungen, Unterlagen, Analyse-Ergebnisse und Community-Zugang.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Supabase Auth einrichten</strong><span>E-Mail/Passwort-Login, Magic Link, E-Mail-Bestätigung.</span></div><span class="check-tag tag-supa">Supabase</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Login / Registrierung</strong><span>Neue Seite app/login/page.tsx.</span></div><span class="check-tag tag-tech">Frontend</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Kunden-Dashboard</strong><span>app/dashboard/page.tsx: gebuchte Pakete, Fortschritt, Downloads, Analyse.</span></div><span class="check-tag tag-tech">Frontend</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Stripe Webhook → Supabase</strong><span>Nach Zahlung automatisch Zugang freischalten.</span></div><span class="check-tag tag-stripe">Stripe</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num later">6</div><div class="phase-title-wrap"><h3>Community-Bereich</h3><p>Geschlossener Raum für Mitglieder</p></div><span class="phase-badge badge-later">⏳ Später</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Die Community ist das Herzstück — Singles, die gemeinsam wachsen, moderiert von Monika. Nur für zahlende Mitglieder.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Geschützter Bereich mit Auth-Guard</strong><span>Nur eingeloggte & bezahlte Nutzer sehen die Community.</span></div><span class="check-tag tag-tech">Frontend</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Beiträge & Kommentare</strong><span>Einfaches Forum in Supabase.</span></div><span class="check-tag tag-tech">Feature</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Moderations-Tools für Monika</strong><span>Admin-Ansicht: Beiträge genehmigen, Nutzer verwalten.</span></div><span class="check-tag tag-tech">Feature</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num later">7</div><div class="phase-title-wrap"><h3>KI-Persönlichkeitsanalyse</h3><p>Claude AI wertet den Fragebogen aus — echte Tiefe statt Mock</p></div><span class="phase-badge badge-later">⏳ Später</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Aktuell gibt lib/analyze-profile.ts regelbasierte Ergebnisse. Mit Claude API werden Antworten tiefgehend interpretiert und ein persönliches Profil erstellt.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Anthropic API-Key einrichten</strong><span>API-Key als Umgebungsvariable in Cloudflare + .env.local.</span></div><span class="check-tag tag-ai">KI</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Cloudflare Worker als KI-Endpunkt</strong><span>Worker empfängt Fragebogen, ruft Claude API auf, gibt Analyse zurück.</span></div><span class="check-tag tag-ai">KI</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Analyse-Ergebnisse in Supabase speichern</strong><span>Im Dashboard sichtbar, für Matching nutzbar.</span></div><span class="check-tag tag-ai">KI</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card" onclick="togglePhase(this)">
+    <div class="phase-head"><div class="phase-num later">8</div><div class="phase-title-wrap"><h3>Matching & Marktplatz</h3><p>Kuratierte Partnervorschläge — das eigentliche Herzstück</p></div><span class="phase-badge badge-later">⏳ Später</span><span class="phase-arrow">▼</span></div>
+    <div class="phase-body">
+      <div class="phase-why">Kein Algorithmus, sondern Monika kuratiert persönlich, wer zu wem passt. Die Plattform unterstützt dabei mit Profilen und Werkzeugen.</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Profil-Erstellung für Mitglieder</strong><span>Fotos, Werte, Wünsche, Persönlichkeitsanalyse-Ergebnis.</span></div><span class="check-tag tag-tech">Feature</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Admin-Freigabe-Workflow</strong><span>Monika prüft jedes Profil vor Sichtbarkeit.</span></div><span class="check-tag tag-tech">Feature</span></div>
+        <div class="check-item"><div class="check-box unchecked"></div><div class="check-text"><strong>Kuratierte Vorschläge</strong><span>Monika wählt Matches aus und schickt Vorschläge per Dashboard-Nachricht.</span></div><span class="check-tag tag-tech">Feature</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITEKTUR -->
+<div class="page" id="page-architektur">
+  <div class="page-header"><h2>🏗️ Architektur</h2></div>
+  <div class="section-title">Zwei Cloudflare-Projekte</div>
+  <div class="two-boxes">
+    <div class="box-highlight"><h4>🔒 Interne Verwaltung</h4><p>Geschützt mit Cloudflare Access (nur für Monika, Peter, Lilli)</p><div class="box-mono">klartext-roadmap.pages.dev</div><div style="font-size:11px;color:var(--soft);margin-top:6px">GitHub: oechteli/klartext-roadmap<br>Lokal: C:\Users\mail\klartext-roadmap</div></div>
+    <div class="box-highlight2"><h4>🌐 Kunden-Website & Portal</h4><p>Öffentlich — für Interessenten und Kunden</p><div class="box-mono">klartextliebe.monika-oechtering.workers.dev</div><div style="font-size:11px;color:var(--soft);margin-top:6px">GitHub: oechteli/klartextliebe<br>Lokal: C:\Users\mail\klartext-liebe</div></div>
+  </div>
+  <div class="section-title">Tech-Bausteine</div>
+  <div class="arch-block"><h3>⚛️ Next.js 14 (App Router)</h3><p>Grundgerüst der Website. Statischer Export. Baut alle Seiten, verwaltet URLs, optimiert Ladezeiten. TypeScript + Tailwind CSS.</p></div>
+  <div class="arch-block"><h3>☁️ Cloudflare Workers / Pages</h3><p>Hosting und Auto-Deploy. Fertige Website wird weltweit schnell ausgeliefert. Kostenlos bis zu sehr hohen Zugriffszahlen.</p></div>
+  <div class="arch-block"><h3>🗄️ Supabase (geplant, Phase 4)</h3><p>PostgreSQL-Datenbank als Service. Auth (E-Mail/Passwort + Magic Link), Datenspeicherung für Waitlist, Kontaktanfragen, Nutzerprofile, Community.</p></div>
+  <div class="arch-block"><h3>💳 Stripe (geplant, Phase 3)</h3><p>Zahlungen für Coaching-Pakete. Payment Links funktionieren ohne eigenes Backend. Webhook → Supabase für automatische Freischaltung.</p></div>
+  <div class="arch-block"><h3>🤖 Claude AI (geplant, Phase 7)</h3><p>Anthropic Claude für die KI-Persönlichkeitsanalyse. Fragebogen-Antworten werden tiefgehend interpretiert und als persönliches Profil gespeichert.</p></div>
+  <div class="section-title">Tech-Stack</div>
+  <div class="arch-cols">
+    <div class="arch-col"><h4>Frontend</h4><ul><li>Next.js 14 (App Router)</li><li>TypeScript + Tailwind CSS</li><li>Cloudflare Workers</li></ul></div>
+    <div class="arch-col"><h4>Backend / Services</h4><ul><li>Supabase (Auth + DB) → Phase 4</li><li>Stripe (Payments) → Phase 3</li><li>Claude API (KI) → Phase 7</li></ul></div>
+  </div>
+</div>
+
+<!-- LINKS -->
+<div class="page" id="page-links">
+  <div class="page-header"><h2>🔗 Alle Links</h2></div>
+  <div class="section-title">Webseiten (live)</div>
+  <div class="link-table">
+    <div class="link-row"><div class="link-dot" style="background:var(--green)"></div><div class="link-name">Kunden-Website</div><div class="link-url">klartextliebe.monika-oechtering.workers.dev</div><span class="link-status badge-done" style="background:#dcfce7;color:var(--green)">Live</span></div>
+    <div class="link-row"><div class="link-dot" style="background:var(--green)"></div><div class="link-name">Roadmap (intern)</div><div class="link-url">klartext-roadmap.pages.dev</div><span class="link-status badge-done" style="background:#dcfce7;color:var(--green)">Live</span></div>
+    <div class="link-row"><div class="link-dot" style="background:#cbd5e1"></div><div class="link-name">Domain</div><div class="link-url">klartext-liebe.de</div><span class="link-status badge-plan" style="background:#f1f5f9;color:var(--soft)">Phase 2</span></div>
+  </div>
+  <div class="section-title">GitHub</div>
+  <div class="link-table">
+    <div class="link-row"><div class="link-dot" style="background:var(--green)"></div><div class="link-name">Kunden-Website</div><div class="link-url">github.com/oechteli/klartextliebe</div><span class="link-status badge-done" style="background:#dcfce7;color:var(--green)">Aktiv</span></div>
+    <div class="link-row"><div class="link-dot" style="background:var(--green)"></div><div class="link-name">Roadmap</div><div class="link-url">github.com/oechteli/klartext-roadmap</div><span class="link-status badge-done" style="background:#dcfce7;color:var(--green)">Aktiv</span></div>
+  </div>
+  <div class="section-title">Lokale Pfade</div>
+  <div class="link-table">
+    <div class="link-row"><div class="link-dot" style="background:var(--rose)"></div><div class="link-name">Kunden-Website (Next.js)</div><div class="link-url">C:\Users\mail\klartext-liebe</div></div>
+    <div class="link-row"><div class="link-dot" style="background:var(--rose)"></div><div class="link-name">Roadmap (diese Seite)</div><div class="link-url">C:\Users\mail\klartext-roadmap</div></div>
+  </div>
+  <div class="section-title">YouTube</div>
+  <div class="link-table">
+    <div class="link-row"><div class="link-dot" style="background:#ef4444"></div><div class="link-name">YouTube-Kanal</div><div class="link-url">@klartextliebe</div><span class="link-status" style="background:#fee2e2;color:#b91c1c;font-size:11px;padding:2px 7px;border-radius:999px;font-weight:600">Aufbauen</span></div>
+  </div>
+</div>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>
-async function loadLastUebergabe() {
-  const el = document.getElementById('dash-uebergabe');
-  try {
-    const r = await fetch('/api/uebergabe');
-    const data = await r.json();
-    const c = data.current || {};
-    if (!c.ts) {
-      el.innerHTML = `<div style="color:var(--ink3);font-size:.85rem;text-align:center;padding:16px 0">
-        <div style="font-size:1.3rem;margin-bottom:6px">📋</div>
-        Noch kein Protokoll gespeichert.<br>
-        <a href="uebergabe.html" style="color:var(--blue)">Jetzt erstellen →</a>
-      </div>`;
-      return;
-    }
-    el.innerHTML = `
-      <div style="font-size:.72rem;color:var(--violet);font-weight:800;margin-bottom:8px">📅 ${c.ts}</div>
-      ${c.stand    ? `<div style="font-size:.85rem;font-weight:600;margin-bottom:6px">🎯 ${c.stand}</div>` : ''}
-      ${c.gemacht  ? `<div style="font-size:.82rem;color:var(--ink2);margin-bottom:6px;white-space:pre-wrap">✅ ${c.gemacht}</div>` : ''}
-      ${c.naechste ? `<div style="font-size:.82rem;color:var(--ink2);white-space:pre-wrap">▶️ ${c.naechste}</div>` : ''}
-      <div style="margin-top:10px">
-        <a href="uebergabe.html" style="font-size:.78rem;color:var(--blue);text-decoration:none">Vollständig ansehen & aktualisieren →</a>
-      </div>`;
-  } catch {
-    el.innerHTML = `<div style="color:var(--ink3);font-size:.83rem;padding:12px 0">
-      Konnte nicht geladen werden. <a href="uebergabe.html" style="color:var(--blue)">Direkt öffnen →</a>
-    </div>`;
-  }
-}
-loadLastUebergabe();
+function show(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');const n=document.getElementById('nav-'+id);if(n)n.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function togglePhase(card){card.classList.toggle('open');}
 </script>
 </body>
 </html>
